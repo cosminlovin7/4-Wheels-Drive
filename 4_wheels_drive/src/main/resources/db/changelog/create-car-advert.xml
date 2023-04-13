@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="0" author="cosmin">
+        <createTable tableName="car_advert">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints unique="true" nullable="false" primaryKey="true"/>
+            </column>
+            <column name="brand" type="varchar(255)"/>
+            <column name="price" type="double"/>
+            <column name="year" type="int"/>
+            <column name="fuel_type" type="varchar(255)"/>
+            <column name="country" type="varchar(255)"/>
+            <column name="car_body_id" type="bigint"/>
+            <column name="car_model_id" type="bigint"/>
+            <column name="car_generation_id" type="bigint"/>
+            <column name="car_engine_id" type="bigint"/>
+            <column name="user_id" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="car_body">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="body_type" type="varchar(255)"/>
+            <column name="color_type" type="varchar(255)"/>
+            <column name="nr_of_seats" type="int"/>
+            <column name="car_advert_id" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="car_engine">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints unique="true" nullable="false" primaryKey="true"/>
+            </column>
+            <column name="emission_level_type" type="varchar(255)"/>
+            <column name="horse_power" type="int"/>
+            <column name="cylinder_capacity" type="double"/>
+            <column name="transmission_type" type="varchar(255)"/>
+            <column name="drivetrain" type="varchar(255)"/>
+            <column name="car_advert_id" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="car_model">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints unique="true" nullable="false" primaryKey="true"/>
+            </column>
+            <column name="model_name" type="varchar(255)"/>
+            <column name="generation_id" type="bigint"/>
+            <column name="car_advert_id" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="car_model_generation">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="generation_name" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="car_options">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="has_apple_car_play" type="boolean"/>
+            <column name="has_head_up_display" type="boolean"/>
+            <column name="has_android" type="boolean"/>
+            <column name="has_bluetooth" type="boolean"/>
+            <column name="has_air_conditioning" type="boolean"/>
+            <column name="has_dual_climatic" type="boolean"/>
+            <column name="has_panoramic_roof" type="boolean"/>
+            <column name="has_sun_roof" type="boolean"/>
+            <column name="upholstery_type" type="varchar(255)"/>
+            <column name="has_electric_driver_seat" type="boolean"/>
+            <column name="has_electric_passenger_seat" type="boolean"/>
+            <column name="has_electric_seats" type="boolean"/>
+            <column name="has_heated_driver_seat" type="boolean"/>
+            <column name="has_heated_passenger_seat" type="boolean"/>
+            <column name="has_heated_steering_wheel" type="boolean"/>
+            <column name="has_heated_windscreen" type="boolean"/>
+            <column name="has_cruise_control" type="boolean"/>
+            <column name="has_distance_control" type="boolean"/>
+            <column name="has_360_cameras" type="boolean"/>
+            <column name="has_parking_sensors" type="boolean"/>
+            <column name="has_dual_climatronic" type="boolean"/>
+            <column name="headlights_type" type="varchar(255)"/>
+            <column name="car_advert_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="car_advert"
+                                 baseColumnNames="car_body_id"
+                                 constraintName="car_body_fk"
+                                 referencedTableName="car_body"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="car_advert"
+                                 baseColumnNames="car_model_id"
+                                 constraintName="car_model_fk"
+                                 referencedTableName="car_model"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="car_advert"
+                                 baseColumnNames="car_generation_id"
+                                 constraintName="car_generation_fk"
+                                 referencedTableName="car_model_generation"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="car_advert"
+                                 baseColumnNames="car_engine_id"
+                                 constraintName="car_engine_fk"
+                                 referencedTableName="car_engine"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="car_advert"
+                                 baseColumnNames="user_id"
+                                 constraintName="application_user_fk"
+                                 referencedTableName="application_user"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="car_body"
+                                 baseColumnNames="car_advert_id"
+                                 constraintName="car_advert_fk"
+                                 referencedTableName="car_advert"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="car_engine"
+                                 baseColumnNames="car_advert_id"
+                                 constraintName="car_advert_fk"
+                                 referencedTableName="car_advert"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="car_model"
+                                 baseColumnNames="generation_id"
+                                 constraintName="car_model_generation_fk"
+                                 referencedTableName="car_model_generation"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="car_model"
+                                 baseColumnNames="car_advert_id"
+                                 constraintName="car_advert_fk"
+                                 referencedTableName="car_advert"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="1" author="cosmin">
+        <createSequence sequenceName="car_advert_sequence"
+                        schemaName="public"
+                        startValue="1"
+                        minValue="1"
+                        maxValue="2147483647"
+                        incrementBy="1"
+                        dataType="bigint"
+                        cycle="false"/>
+
+        <createSequence sequenceName="car_body_sequence"
+                        schemaName="public"
+                        startValue="1"
+                        minValue="1"
+                        maxValue="2147483647"
+                        incrementBy="1"
+                        dataType="bigint"
+                        cycle="false"/>
+
+        <createSequence sequenceName="car_engine_sequence"
+                        schemaName="public"
+                        startValue="1"
+                        minValue="1"
+                        maxValue="2147483647"
+                        incrementBy="1"
+                        dataType="bigint"
+                        cycle="false"/>
+
+        <createSequence sequenceName="car_model_sequence"
+                        schemaName="public"
+                        startValue="1"
+                        minValue="1"
+                        maxValue="2147483647"
+                        incrementBy="1"
+                        dataType="bigint"
+                        cycle="false"/>
+
+        <createSequence sequenceName="car_model_generation_sequence"
+                        schemaName="public"
+                        startValue="1"
+                        minValue="1"
+                        maxValue="2147483647"
+                        incrementBy="1"
+                        dataType="bigint"
+                        cycle="false"/>
+
+        <createSequence sequenceName="car_options_sequence"
+                        schemaName="public"
+                        startValue="1"
+                        minValue="1"
+                        maxValue="2147483647"
+                        incrementBy="1"
+                        dataType="bigint"
+                        cycle="false"/>
+    </changeSet>
+
+    <changeSet id="2" author="cosmin">
+        <dropColumn tableName="car_model" columnName="car_advert_id"/>
+        <addColumn tableName="car_advert">
+            <column name="car_options_id" type="bigint"/>
+            <column name="description" type="varchar(1000)"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="car_advert"
+                                 baseColumnNames="car_options_id"
+                                 constraintName="car_options_fk"
+                                 referencedTableName="car_options"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="3" author="cosmin">
+        <dropColumn tableName="car_model" columnName="generation_id"/>
+        <dropColumn tableName="car_advert" columnName="brand"/>
+
+        <createTable tableName="car_brand">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="brand_name" type="varchar(255)"/>
+        </createTable>
+
+        <addColumn tableName="car_advert">
+            <column name="car_brand_id" type="bigint"/>
+        </addColumn>
+        <addColumn tableName="car_model">
+            <column name="brand_id" type="bigint"/>
+        </addColumn>
+        <addColumn tableName="car_model_generation">
+            <column name="model_id" type="bigint"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="car_advert"
+                                 baseColumnNames="car_brand_id"
+                                 constraintName="car_brand_fk"
+                                 referencedTableName="car_brand"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="car_model"
+                                 baseColumnNames="brand_id"
+                                 constraintName="car_brand_fk"
+                                 referencedTableName="car_brand"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="car_model_generation"
+                                 baseColumnNames="model_id"
+                                 constraintName="car_model_fk"
+                                 referencedTableName="car_model"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

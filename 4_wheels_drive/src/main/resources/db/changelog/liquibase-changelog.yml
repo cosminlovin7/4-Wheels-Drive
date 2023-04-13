@@ -5,3 +5,5 @@ databaseChangeLog:
       file: db/changelog/create-registration-token.xml
   - include:
       file: db/changelog/create-resetpassword-token.xml
+  - include:
+      file: db/changelog/create-car-advert.xml

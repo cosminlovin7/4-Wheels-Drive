@@ -21,4 +21,9 @@ public final class Constants {
     public final static String ACCOUNT_CREATED = "The account has been created. An e-mail has been sent with the activation link.";
     public final static String ACTIVATION_LINK_RESENT = "An e-mail has been send with the activation link.";
     public final static String AUTHENTICATION_SUCCESSFUL = "The authentication has been successful.";
+    public final static String CAR_MISSING_INFO = "Information about car is missing.";
+    public final static String CAR_ADVERT_CREATED = "The advertisement has been successfully created!";
+    public final static String INVALID_CAR_MODEL = "The car model does not exist in the database.";
+    public final static String INVALID_CAR_MODEL_GENERATION = "The car model generation does not exist in the database.";
+    public final static String INVALID_CAR_BRAND = "The car brand does not exist in the database.";
 }
