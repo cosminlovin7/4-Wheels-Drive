@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/create-application-user.xml
+  - include:
+      file: db/changelog/create-registration-token.xml
+  - include:
+      file: db/changelog/create-resetpassword-token.xml

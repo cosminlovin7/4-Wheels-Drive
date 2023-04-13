@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  parking_system_db:
+    container_name: 4wheels_drive_database_container
+    image: postgres:latest
+    restart: always
+    env_file: 4wheels_drive_db.env
+    ports: 
+      - "5432:5432"
+    volumes:
+      - ./volumes/4wheels_drive_db:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    ports:
+      - "8081:80"
+    volumes:
+      - ./volumes/pgadmin:/var/lib/pgadmin
+
+volumes:
+  4wheels_drive_storage:
+    name: 4wheels_drive_db
+  pgadmin_storage:
+    name: pgadmin
