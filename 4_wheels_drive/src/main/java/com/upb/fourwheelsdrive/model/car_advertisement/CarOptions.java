@@ -24,6 +24,7 @@ public class CarOptions {
     private boolean hasAndroid;
     private boolean hasBluetooth;
     private boolean hasAirConditioning;
+    @Column(name = "has_dual_climatronic")
     private boolean hasDualClimatic;
     private boolean hasPanoramicRoof;
     private boolean hasSunRoof;
@@ -38,6 +39,7 @@ public class CarOptions {
     private boolean hasHeatedWindscreen;
     private boolean hasCruiseControl;
     private boolean hasDistanceControl;
+    @Column(name = "has_360_cameras")
     private boolean has360Cameras;
     private boolean hasParkingSensors;
     @Enumerated(EnumType.STRING)

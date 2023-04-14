@@ -252,4 +252,79 @@
                                  referencedTableName="car_model"
                                  referencedColumnNames="id"/>
     </changeSet>
+
+    <changeSet id="4" author="cosmin">
+        <dropForeignKeyConstraint baseTableName="car_advert" constraintName="car_body_fk"/>
+        <dropForeignKeyConstraint baseTableName="car_advert" constraintName="car_engine_fk"/>
+        <dropForeignKeyConstraint baseTableName="car_advert" constraintName="car_options_fk"/>
+
+        <addForeignKeyConstraint baseTableName="car_advert"
+                                 baseColumnNames="car_body_id"
+                                 constraintName="car_body_fk"
+                                 referencedTableName="car_body"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="car_advert"
+                                 baseColumnNames="car_engine_id"
+                                 constraintName="car_engine_fk"
+                                 referencedTableName="car_engine"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="car_advert"
+                                 baseColumnNames="car_options_id"
+                                 constraintName="car_options_fk"
+                                 referencedTableName="car_options"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+    <changeSet id="5" author="cosmin">
+        <dropForeignKeyConstraint baseTableName="car_advert" constraintName="car_body_fk"/>
+        <dropForeignKeyConstraint baseTableName="car_advert" constraintName="car_engine_fk"/>
+        <dropForeignKeyConstraint baseTableName="car_advert" constraintName="car_options_fk"/>
+
+        <addForeignKeyConstraint baseTableName="car_advert"
+                                 baseColumnNames="car_body_id"
+                                 constraintName="car_body_fk"
+                                 referencedTableName="car_body"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="car_advert"
+                                 baseColumnNames="car_engine_id"
+                                 constraintName="car_engine_fk"
+                                 referencedTableName="car_engine"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="car_advert"
+                                 baseColumnNames="car_options_id"
+                                 constraintName="car_options_fk"
+                                 referencedTableName="car_options"
+                                 referencedColumnNames="id"/>
+
+        <dropForeignKeyConstraint baseTableName="car_body" constraintName="car_advert_fk"/>
+        <dropForeignKeyConstraint baseTableName="car_engine" constraintName="car_advert_fk"/>
+
+        <addForeignKeyConstraint baseTableName="car_body"
+                                 baseColumnNames="car_advert_id"
+                                 constraintName="car_advert_fk"
+                                 referencedTableName="car_advert"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="car_engine"
+                                 baseColumnNames="car_advert_id"
+                                 constraintName="car_advert_fk"
+                                 referencedTableName="car_advert"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="car_options"
+                                 baseColumnNames="car_advert_id"
+                                 constraintName="car_advert_fk"
+                                 referencedTableName="car_advert"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
 </databaseChangeLog>

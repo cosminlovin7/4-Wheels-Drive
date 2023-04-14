@@ -26,4 +26,8 @@ public final class Constants {
     public final static String INVALID_CAR_MODEL = "The car model does not exist in the database.";
     public final static String INVALID_CAR_MODEL_GENERATION = "The car model generation does not exist in the database.";
     public final static String INVALID_CAR_BRAND = "The car brand does not exist in the database.";
+    public final static String CAR_ADVERT_EDITED = "The advertisement has been successfully edited!";
+    public final static String CAR_ADVERT_MISSING = "The requested car advert is missing...";
+    public final static String CAR_ADVERT_DELETED = "The advertisement has been successfully deleted!";
+    public final static String OOPS = "OOPS, bad request... :(";
 }

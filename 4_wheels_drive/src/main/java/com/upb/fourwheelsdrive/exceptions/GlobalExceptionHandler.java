@@ -1,6 +1,7 @@
 package com.upb.fourwheelsdrive.exceptions;
 
 import com.upb.fourwheelsdrive.model.exception.ExceptionResponse;
+import com.upb.fourwheelsdrive.utils.Constants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,6 +24,17 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(exceptionResponse, e.getStatus());
+    }
+
+    @ExceptionHandler()
+    public ResponseEntity<ExceptionResponse> handleIllegalArgumentException(IllegalArgumentException e) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+            HttpStatus.BAD_REQUEST.value(),
+            Constants.OOPS,
+            LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {
