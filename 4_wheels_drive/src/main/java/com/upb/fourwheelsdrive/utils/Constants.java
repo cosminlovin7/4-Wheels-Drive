@@ -30,4 +30,10 @@ public final class Constants {
     public final static String CAR_ADVERT_MISSING = "The requested car advert is missing...";
     public final static String CAR_ADVERT_DELETED = "The advertisement has been successfully deleted!";
     public final static String OOPS = "OOPS, bad request... :(";
+    public final static String BRAND_ADDED = "A new vehicle brand has been added!";
+    public final static String MODEL_ADDED = "A new brand model has been added!";
+    public final static String GENERATION_ADDED = "A new model generation has been added!";
+    public final static String BRAND_ALREADY_EXISTS = "The vehicle brand already exists in the database!";
+    public final static String MODEL_ALREADY_EXISTS = "The brand model already exists in the database!";
+    public final static String GENERATION_ALREADY_EXISTS = "The model generation already exists in the database!";
 }

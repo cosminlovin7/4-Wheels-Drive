@@ -2,25 +2,23 @@ package com.upb.fourwheelsdrive.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.upb.fourwheelsdrive.exceptions.BaseException;
-import com.upb.fourwheelsdrive.model.admin_control.BrandNamesDTO;
-import com.upb.fourwheelsdrive.model.admin_control.ModelGenerationNamesDTO;
-import com.upb.fourwheelsdrive.model.admin_control.ModelNamesDTO;
+import com.upb.fourwheelsdrive.model.BaseResponse;
+import com.upb.fourwheelsdrive.model.admin_control.*;
 import com.upb.fourwheelsdrive.service.AdminService;
 import com.upb.fourwheelsdrive.utils.Constants;
 import com.upb.fourwheelsdrive.utils.JwtUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RequestMapping("/admin/control")
 @RestController
+@Slf4j
 public class AdminController {
     private AdminService adminServiceImpl;
 
@@ -58,6 +56,55 @@ public class AdminController {
         ModelGenerationNamesDTO modelGenerationNamesDTO = adminServiceImpl.getModelGenerations(brandName, modelName);
 
         return ResponseEntity.status(HttpStatus.OK).body(modelGenerationNamesDTO);
+    }
+
+    @PostMapping("/add/brand")
+    public ResponseEntity<BaseResponse> addBrand(
+            @RequestBody RequestBrandDTO requestBrandDTO,
+            @NonNull HttpServletRequest request
+    ) {
+        checkIfUserIsAdmin(request);
+
+        log.info(requestBrandDTO.toString());
+        adminServiceImpl.addBrand(requestBrandDTO);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new BaseResponse(
+                HttpStatus.OK.value(),
+                Constants.BRAND_ADDED
+            )
+        );
+    }
+
+    @PostMapping("/add/model")
+    public ResponseEntity<BaseResponse> addBrand(
+            @RequestBody RequestModelDTO requestModelDTO,
+            @NonNull HttpServletRequest request
+    ) {
+        checkIfUserIsAdmin(request);
+
+        adminServiceImpl.addModel(requestModelDTO);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new BaseResponse(
+                        HttpStatus.OK.value(),
+                        Constants.MODEL_ADDED
+                )
+        );
+    }
+
+    @PostMapping("/add/generation")
+    public ResponseEntity<BaseResponse> addBrand(
+            @RequestBody RequestModelGenerationDTO requestModelGenerationDTO,
+            @NonNull HttpServletRequest request
+    ) {
+        checkIfUserIsAdmin(request);
+
+        adminServiceImpl.addModelGeneration(requestModelGenerationDTO);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new BaseResponse(
+                        HttpStatus.OK.value(),
+                        Constants.GENERATION_ADDED
+                )
+        );
     }
 
     private void checkIfUserIsAdmin(HttpServletRequest request) {

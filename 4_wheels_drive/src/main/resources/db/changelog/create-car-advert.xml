@@ -327,4 +327,34 @@
                                  referencedColumnNames="id"
                                  onDelete="CASCADE"/>
     </changeSet>
+
+    <changeSet id="6" author="cosmin">
+        <createSequence sequenceName="car_brand_sequence"
+                        schemaName="public"
+                        startValue="1"
+                        minValue="1"
+                        maxValue="2147483647"
+                        incrementBy="1"
+                        dataType="bigint"
+                        cycle="false"/>
+    </changeSet>
+
+    <changeSet id="7" author="cosmin">
+        <dropForeignKeyConstraint baseTableName="car_model" constraintName="car_brand_fk"/>
+        <dropForeignKeyConstraint baseTableName="car_model_generation" constraintName="car_model_fk"/>
+
+        <addForeignKeyConstraint baseTableName="car_model"
+                                 baseColumnNames="brand_id"
+                                 constraintName="car_brand_fk"
+                                 referencedTableName="car_brand"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="car_model_generation"
+                                 baseColumnNames="model_id"
+                                 constraintName="car_model_fk"
+                                 referencedTableName="car_model"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+    </changeSet>
 </databaseChangeLog>
