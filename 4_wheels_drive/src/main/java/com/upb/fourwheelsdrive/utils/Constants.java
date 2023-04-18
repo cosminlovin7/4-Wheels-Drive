@@ -36,4 +36,8 @@ public final class Constants {
     public final static String BRAND_ALREADY_EXISTS = "The vehicle brand already exists in the database!";
     public final static String MODEL_ALREADY_EXISTS = "The brand model already exists in the database!";
     public final static String GENERATION_ALREADY_EXISTS = "The model generation already exists in the database!";
+    public final static String ADVERT_ADDED_FAVORITE = "The advert has been added to favorite list.";
+    public final static String AD_ALREADY_MARKED_AS_FAVORITE = "The advert has already been marked as favorite.";
+    public final static String AD_NOT_MARKED_AS_FAVORITE = "The advert was not marked as favorite.";
+    public final static String INVALID_FILTER_PARAMS = "Invalid filter parameters.";
 }

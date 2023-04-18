@@ -31,6 +31,11 @@ public class HelloWorld {
     private final JwtService jwtService;
     private final ObjectMapper objectMapper;
 
+    @GetMapping("/hello")
+    public String testHello() {
+        return "hello world!";
+    }
+
     @GetMapping()
     public String testingPage(@NonNull HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");

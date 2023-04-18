@@ -10,6 +10,9 @@ import java.util.Optional;
 
 @Repository
 public interface CarModelGenerationRepository extends JpaRepository<CarModelGeneration, Long> {
-    Optional<CarModelGeneration> findCarModelGenerationByGenerationName(final String generationName);
+    Optional<CarModelGeneration> findCarModelGenerationByGenerationNameAndCarModel(
+            final String generationName,
+            final CarModel carModel
+    );
     List<CarModelGeneration> findAllByCarModel(CarModel carModel);
 }

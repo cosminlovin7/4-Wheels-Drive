@@ -1,5 +1,6 @@
 package com.upb.fourwheelsdrive.model.user;
 
+import com.upb.fourwheelsdrive.model.car_advertisement.CarAdvert;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -36,6 +37,8 @@ public class ApplicationUser implements UserDetails {
     private ApplicationUserRoles userRole;
     private boolean locked = false;
     private boolean enabled = false;
+    @ManyToMany(mappedBy = "userList")
+    private List<CarAdvert> carAdverts;
 
     public ApplicationUser(final String username,
                            final String password,
@@ -45,6 +48,7 @@ public class ApplicationUser implements UserDetails {
         this.password = password;
         this.email = email;
         this.userRole = userRole;
+        this.carAdverts = new ArrayList<>();
     }
 
     @Override

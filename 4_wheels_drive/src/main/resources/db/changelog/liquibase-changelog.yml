@@ -7,3 +7,5 @@ databaseChangeLog:
       file: db/changelog/create-resetpassword-token.xml
   - include:
       file: db/changelog/create-car-advert.xml
+  - include:
+      file: db/changelog/create-user-favorite-ad.xml

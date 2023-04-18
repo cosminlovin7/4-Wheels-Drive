@@ -1,25 +1,31 @@
 package com.upb.fourwheelsdrive.service.implementation;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.upb.fourwheelsdrive.exceptions.BaseException;
 import com.upb.fourwheelsdrive.model.car_advertisement.*;
-import com.upb.fourwheelsdrive.model.car_advertisement.dto.AdvertRequest;
-import com.upb.fourwheelsdrive.model.car_advertisement.dto.CarBodyDTO;
-import com.upb.fourwheelsdrive.model.car_advertisement.dto.CarEngineDTO;
-import com.upb.fourwheelsdrive.model.car_advertisement.dto.CarOptionsDTO;
+import com.upb.fourwheelsdrive.model.car_advertisement.dto.*;
 import com.upb.fourwheelsdrive.model.car_advertisement.enums.*;
 import com.upb.fourwheelsdrive.model.user.ApplicationUser;
 import com.upb.fourwheelsdrive.repository.*;
 import com.upb.fourwheelsdrive.service.AdvertisementService;
 import com.upb.fourwheelsdrive.service.JwtService;
 import com.upb.fourwheelsdrive.utils.Constants;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @AllArgsConstructor
+@Slf4j
 public class AdvertisementServiceImpl implements AdvertisementService {
     private CarAdvertRepository carAdvertRepository;
     private CarBodyRepository carBodyRepository;
@@ -28,9 +34,11 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private CarModelRepository carModelRepository;
     private CarModelGenerationRepository carModelGenerationRepository;
     private CarBrandRepository carBrandRepository;
+    private ApplicationUserRepository applicationUserRepository;
 
     private JwtService jwtServiceImpl;
     private UserDetailsService applicationUserServiceImpl;
+    private EntityManager entityManager;
 
     @Transactional
     @Override
@@ -53,8 +61,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                     new BaseException(Constants.INVALID_CAR_MODEL, HttpStatus.BAD_REQUEST)
         );
 
-        CarModelGeneration carModelGeneration = carModelGenerationRepository.findCarModelGenerationByGenerationName(
-                advertRequest.getGenerationName()).orElseThrow(() ->
+        CarModelGeneration carModelGeneration = carModelGenerationRepository.findCarModelGenerationByGenerationNameAndCarModel(
+                advertRequest.getGenerationName(), carModel).orElseThrow(() ->
                     new BaseException(Constants.INVALID_CAR_MODEL_GENERATION, HttpStatus.BAD_REQUEST)
         );
 
@@ -115,8 +123,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                     new BaseException(Constants.INVALID_CAR_MODEL, HttpStatus.BAD_REQUEST)
         );
 
-        CarModelGeneration carModelGeneration = carModelGenerationRepository.findCarModelGenerationByGenerationName(
-                advertRequest.getGenerationName()).orElseThrow(() ->
+        CarModelGeneration carModelGeneration = carModelGenerationRepository.findCarModelGenerationByGenerationNameAndCarModel(
+                advertRequest.getGenerationName(), carModel).orElseThrow(() ->
                     new BaseException(Constants.INVALID_CAR_MODEL_GENERATION, HttpStatus.BAD_REQUEST)
         );
 
@@ -159,6 +167,129 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         carAdvertRepository.delete(carAdvert);
     }
 
+    @Override
+    public List<CarAdvertDTO> getCarAdverts(String jwtToken) {
+        String username = jwtServiceImpl.getUsernameFromToken(jwtToken);
+        ApplicationUser applicationUser = (ApplicationUser)applicationUserServiceImpl.loadUserByUsername(username);
+        List<CarAdvert> carAdverts = carAdvertRepository.getCarAdvertsByUserId(applicationUser.getId());
+
+        return mapCarAdvertListToCarAdvertDTOList(carAdverts);
+    }
+
+    @Override
+    public List<CarAdvertDTO> getAllCarAdverts() {
+        List<CarAdvert> carAdverts = carAdvertRepository.findAll();
+
+        return mapCarAdvertListToCarAdvertDTOList(carAdverts);
+    }
+
+    @Override
+    public void addAdvertToFavorites(FavoriteAdRequest favoriteAdRequest, String jwtToken) {
+        String username = jwtServiceImpl.getUsernameFromToken(jwtToken);
+        ApplicationUser applicationUser = (ApplicationUser)applicationUserServiceImpl.loadUserByUsername(username);
+
+        CarAdvert carAdvert = carAdvertRepository.findById(favoriteAdRequest.getCarAdvertisementId()).orElseThrow(() ->
+                new BaseException(Constants.CAR_ADVERT_MISSING, HttpStatus.BAD_REQUEST)
+        );
+
+        if (carAdvert.getUserList().contains(applicationUser)) {
+            throw new BaseException(Constants.AD_ALREADY_MARKED_AS_FAVORITE, HttpStatus.CONFLICT);
+        }
+
+        carAdvert.getUserList().add(applicationUser);
+        carAdvertRepository.save(carAdvert);
+    }
+
+    @Override
+    public void removeAdvertFromFavorites(FavoriteAdRequest favoriteAdRequest, String jwtToken) {
+        String username = jwtServiceImpl.getUsernameFromToken(jwtToken);
+        ApplicationUser applicationUser = (ApplicationUser)applicationUserServiceImpl.loadUserByUsername(username);
+
+        CarAdvert carAdvert = carAdvertRepository.findById(favoriteAdRequest.getCarAdvertisementId()).orElseThrow(() ->
+                new BaseException(Constants.CAR_ADVERT_MISSING, HttpStatus.BAD_REQUEST)
+        );
+
+        if (!carAdvert.getUserList().contains(applicationUser)) {
+            throw new BaseException(Constants.AD_NOT_MARKED_AS_FAVORITE, HttpStatus.BAD_REQUEST);
+        }
+
+        carAdvert.getUserList().remove(applicationUser);
+        carAdvertRepository.save(carAdvert);
+    }
+
+    @Override
+    public List<CarAdvertDTO> getUserFavoriteAds(String jwtToken) {
+        String username = jwtServiceImpl.getUsernameFromToken(jwtToken);
+        ApplicationUser applicationUser = (ApplicationUser)applicationUserServiceImpl.loadUserByUsername(username);
+
+        List<CarAdvert> favoriteCarAdverts = applicationUser.getCarAdverts();
+
+        return mapCarAdvertListToCarAdvertDTOList(favoriteCarAdverts);
+    }
+
+    @Override
+    public List<CarAdvertDTO> getFilteredCarAdverts(FilterParamsRequest filterParamsRequest) {
+        if (filterParamsRequest.getPrice() != null &&
+                (filterParamsRequest.getMinPrice() != null || filterParamsRequest.getMaxPrice() != null)) {
+            throw new BaseException(Constants.INVALID_FILTER_PARAMS, HttpStatus.BAD_REQUEST);
+        }
+
+        if (filterParamsRequest.getYear() != null &&
+                (filterParamsRequest.getMinYear() != null || filterParamsRequest.getMaxYear() != null)) {
+            throw new BaseException(Constants.INVALID_FILTER_PARAMS, HttpStatus.BAD_REQUEST);
+        }
+
+        List<CarAdvert> carAdverts = carAdvertRepository.getFilteredCarAdverts(
+                filterParamsRequest.getBrandId(),
+                filterParamsRequest.getModelId(),
+                filterParamsRequest.getGenerationId(),
+                filterParamsRequest.getYear(),
+                filterParamsRequest.getMinYear(),
+                filterParamsRequest.getMaxYear(),
+                filterParamsRequest.getPrice(),
+                filterParamsRequest.getMinPrice(),
+                filterParamsRequest.getMaxPrice(),
+                filterParamsRequest.getFuelType(),
+                filterParamsRequest.getCountry()
+        );
+
+        return mapCarAdvertListToCarAdvertDTOList(carAdverts);
+    }
+
+    private List<CarAdvertDTO> mapCarAdvertListToCarAdvertDTOList(List<CarAdvert> carAdverts) {
+        List<CarAdvertDTO>  carAdvertDTOList = new ArrayList<>();
+
+        for (CarAdvert carAdvert : carAdverts) {
+            CarAdvertDTO carAdvertDTO = new CarAdvertDTO();
+            carAdvertDTO.setId(carAdvert.getId());
+            carAdvertDTO.setBrand(carAdvert.getCarBrand().getBrandName());
+            carAdvertDTO.setModel(carAdvert.getCarModel().getModelName());
+            carAdvertDTO.setGeneration(carAdvert.getCarModelGeneration().getGenerationName());
+            carAdvertDTO.setPrice(carAdvert.getPrice());
+            carAdvertDTO.setYear(carAdvert.getYear());
+            carAdvertDTO.setFuelType(carAdvert.getFuelType());
+            carAdvertDTO.setCountry(carAdvert.getCountry());
+            carAdvertDTO.setDescription(carAdvert.getDescription());
+
+            CarBodyDTO carBodyDTO = new CarBodyDTO();
+            mapCarBody(carAdvert.getCarBody(), carBodyDTO);
+
+            CarEngineDTO carEngineDTO = new CarEngineDTO();
+            mapCarEngine(carAdvert.getCarEngine(), carEngineDTO);
+
+            CarOptionsDTO carOptionsDTO = new CarOptionsDTO();
+            mapCarOptions(carAdvert.getCarOptions(), carOptionsDTO);
+
+            carAdvertDTO.setCarBodyDTO(carBodyDTO);
+            carAdvertDTO.setCarEngineDTO(carEngineDTO);
+            carAdvertDTO.setCarOptionsDTO(carOptionsDTO);
+
+            carAdvertDTOList.add(carAdvertDTO);
+        }
+
+        return carAdvertDTOList;
+    }
+
     private void mapAdvertRequestToCarAdvert(CarAdvert carAdvert, AdvertRequest advertRequest) {
         carAdvert.setPrice(advertRequest.getPrice());
         carAdvert.setYear(advertRequest.getYear());
@@ -168,7 +299,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     private void mapCarBody(CarBody carBody, CarBodyDTO carBodyDTO) {
-        carBody.setBodyType(BodyType.valueOf(carBodyDTO.getBodyType()));
+        if (carBodyDTO.getBodyType() != null)
+            carBody.setBodyType(BodyType.valueOf(carBodyDTO.getBodyType()));
         if (carBodyDTO.getColorType() != null)
             carBody.setColorType(ColorType.valueOf(carBodyDTO.getColorType()));
         carBody.setNrOfSeats(carBodyDTO.getNrOfSeats());

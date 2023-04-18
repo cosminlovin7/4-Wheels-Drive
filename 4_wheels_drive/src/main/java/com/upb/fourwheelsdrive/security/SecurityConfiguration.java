@@ -33,7 +33,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/register/**",
                                  "/login",
-                                 "/reset-password/**").permitAll()
+                                 "/reset-password/**",
+                                 "/test/hello").permitAll()
 //                .requestMatchers("/test").hasRole(ApplicationUserRoles.USER.name())
                 .anyRequest()
                 .authenticated()

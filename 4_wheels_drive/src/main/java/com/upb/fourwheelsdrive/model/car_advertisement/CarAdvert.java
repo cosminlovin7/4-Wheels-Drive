@@ -5,6 +5,8 @@ import com.upb.fourwheelsdrive.model.user.ApplicationUser;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 public class CarAdvert {
@@ -60,4 +62,17 @@ public class CarAdvert {
             name = "user_id"
     )
     private ApplicationUser applicationUser;
+    @ManyToMany
+    @JoinTable(
+        name = "user_favorite_ad",
+        joinColumns = @JoinColumn(
+                name = "car_advert_id",
+                referencedColumnName = "id"
+        ),
+        inverseJoinColumns = @JoinColumn(
+                name = "user_id",
+                referencedColumnName = "id"
+        )
+    )
+    private List<ApplicationUser> userList;
 }

@@ -108,7 +108,10 @@ public class AdminServiceImpl implements AdminService {
         }
 
         Optional<CarModelGeneration> carModelGeneration = carModelGenerationRepository
-                .findCarModelGenerationByGenerationName(requestModelGenerationDTO.getGenerationName());
+                .findCarModelGenerationByGenerationNameAndCarModel(
+                        requestModelGenerationDTO.getGenerationName(),
+                        carModel.get()
+                );
 
         if (carModelGeneration.isPresent()) {
             throw new BaseException(Constants.GENERATION_ALREADY_EXISTS, HttpStatus.CONFLICT);
