@@ -1,0 +1,14 @@
+.background-container {
+    background-image: url('../resources/images/white-rolls.jpeg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
+    box-sizing: border-box;
+    height: 1000px;
+    position: relative;
+    display: block;
+}
+
+.header-container {
+    box-sizing: border-box;
+}

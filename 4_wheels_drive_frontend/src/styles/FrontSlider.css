@@ -1,0 +1,13 @@
+.frontslider-container {
+    color: black;
+    font-family: "Montserrat", sans-serif;
+    font-size: 50px;
+    position: absolute;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    height: auto;
+    margin-top: -100px;
+    font-weight: bold;
+    text-align: center;
+}
