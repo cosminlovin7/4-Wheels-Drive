@@ -1,9 +1,10 @@
 .navigation-bar {
-    position:absolute;
+    position: absolute;
     width: 100%;
     height: 60px;
     color: white;
     transition: background-color 0.5s ease-out;
+    z-index: 10;
 }
 
 .navigation-bar.scrolled{

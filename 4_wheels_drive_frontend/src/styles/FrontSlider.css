@@ -1,6 +1,6 @@
 .frontslider-container {
     color: black;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Montserrat";
     font-size: 50px;
     position: absolute;
     top: 40%;
@@ -10,4 +10,10 @@
     margin-top: -100px;
     font-weight: bold;
     text-align: center;
+}
+
+#frontslider-buttons {
+    position: relative;
+    width: 100%;
+    height: auto;
 }

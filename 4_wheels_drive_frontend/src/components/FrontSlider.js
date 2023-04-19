@@ -7,7 +7,7 @@ export default function FrontSlider() {
         if (searchCarContainer) {
             const elementTop = searchCarContainer.getBoundingClientRect().top;
             window.scrollBy({
-                top: elementTop - 60,
+                top: elementTop - 60 - 50,
                 behavior: 'smooth'
             })
         }
@@ -16,9 +16,10 @@ export default function FrontSlider() {
     return (
         <div className="frontslider-container">
             <span>Luxury. Elegance. Comfort.</span>
-            <br />
-            <FrontSliderButton handleClick={scrollToSearchCar} />
-            <FrontSliderButton/>
+            <div id="frontslider-buttons">
+                <FrontSliderButton buttonName="Search" handleClick={scrollToSearchCar}/>
+                <FrontSliderButton buttonName="About Us"/>
+            </div>
         </div>
     );
 }
