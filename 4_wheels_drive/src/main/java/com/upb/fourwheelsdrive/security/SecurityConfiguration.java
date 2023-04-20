@@ -34,7 +34,10 @@ public class SecurityConfiguration {
                 .requestMatchers("/register/**",
                                  "/login",
                                  "/reset-password/**",
-                                 "/test/hello").permitAll()
+                                 "/vehicles",
+                                 "/admin/control/brands",
+                                 "/admin/control/models",
+                                 "/admin/control/generations").permitAll()
 //                .requestMatchers("/test").hasRole(ApplicationUserRoles.USER.name())
                 .anyRequest()
                 .authenticated()

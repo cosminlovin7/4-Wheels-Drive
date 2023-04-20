@@ -15,6 +15,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,7 +44,15 @@ public class AdminServiceImpl implements AdminService {
                 new BaseException(Constants.INVALID_CAR_BRAND, HttpStatus.BAD_REQUEST));
 
         modelNamesDTO.setBrand(carBrand);
-        modelNamesDTO.setModels(carModelRepository.findAllByCarBrand(carBrand));
+        List<CarModel> carModelList = carModelRepository.findAllByCarBrand(carBrand);
+
+        List<CarModelDTO> carModelDTOList = new ArrayList<>();
+        for (CarModel carModel : carModelList) {
+            CarModelDTO newCarModelDTO = new CarModelDTO(carModel.getId(), carModel.getModelName());
+            carModelDTOList.add(newCarModelDTO);
+        }
+
+        modelNamesDTO.setModels(carModelDTOList);
 
         return modelNamesDTO;
     }
@@ -58,8 +68,17 @@ public class AdminServiceImpl implements AdminService {
                 new BaseException(Constants.INVALID_CAR_MODEL, HttpStatus.BAD_REQUEST));
 
         modelGenerationNamesDTO.setBrand(carBrand);
-        modelGenerationNamesDTO.setModel(carModel);
-        modelGenerationNamesDTO.setGenerations(carModelGenerationRepository.findAllByCarModel(carModel));
+        modelGenerationNamesDTO.setModel(new CarModelDTO(carModel.getId(), carModel.getModelName()));
+        List<CarModelGeneration> carModelGenerationList = carModelGenerationRepository.findAllByCarModel(carModel);
+
+        List<CarGenerationDTO> carGenerationDTOList = new ArrayList<>();
+        for (CarModelGeneration carModelGeneration : carModelGenerationList) {
+            CarGenerationDTO carGenerationDTO = new CarGenerationDTO(carModelGeneration.getId(), carModelGeneration.getGenerationName());
+
+            carGenerationDTOList.add(carGenerationDTO);
+        }
+
+        modelGenerationNamesDTO.setGenerations(carGenerationDTOList);
 
         return modelGenerationNamesDTO;
     }

@@ -1,17 +1,14 @@
 #search-car {
     position: relative;
-    width: 100%;
-    height: 1000px;
-    padding: 50px 0 50px;
+    margin: 50px 0 50px;
+    overflow: hidden;
 }
 
 #search-car-container {
     position: relative;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     padding-left: 10%;
     padding-right: 10%;
-    height: 1000px;
     width: auto;
     display: flex;
     flex-direction: column;
@@ -27,15 +24,5 @@
     padding-bottom: 20px;
     letter-spacing: 2px;
     font-weight: 700;
-    background-color: blue;
-}
-
-#search-car-filters {
-    background-color: red;
-    flex: 1;
-}
-
-#display-car-list {
-    background-color: purple;
-    flex: 3;
+    margin-bottom: 20px;
 }

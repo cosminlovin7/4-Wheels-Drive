@@ -3,7 +3,7 @@
     width: 100%;
     height: 60px;
     color: white;
-    transition: background-color 0.5s ease-out;
+    transition: background-color 0.5s ease-in-out;
     z-index: 10;
 }
 

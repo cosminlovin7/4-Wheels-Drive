@@ -11,6 +11,7 @@ import com.upb.fourwheelsdrive.service.RegisterService;
 import com.upb.fourwheelsdrive.utils.Constants;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RegisterServiceImpl implements RegisterService {
 
     private final ApplicationUserServiceImpl applicationUserService;
@@ -37,6 +39,8 @@ public class RegisterServiceImpl implements RegisterService {
                 + request.getUsername()
                 + "&token="
                 + registerActivationToken;
+
+        log.info(activationLink);
 
         emailSender.sendEmailActivation(
                 request.getEmail(),
@@ -87,6 +91,8 @@ public class RegisterServiceImpl implements RegisterService {
                 + username
                 + "&token="
                 + newRegisterActivationToken.getToken();
+
+        log.info(activationLink);
 
         emailSender.sendEmailActivation(
                 applicationUser.getEmail(),

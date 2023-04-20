@@ -9,5 +9,5 @@ import java.util.List;
 @Data
 public class ModelNamesDTO {
     private CarBrand brand;
-    private List<CarModel> models;
+    private List<CarModelDTO> models;
 }

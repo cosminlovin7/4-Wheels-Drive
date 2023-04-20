@@ -45,6 +45,8 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
                 + newResetPasswordToken.getToken()
                 + "&username=" + username;
 
+        log.info(resetPasswordLink);
+
         emailSender.sendResetPasswordEmail(userDetails.getEmail(), buildEmail(username, resetPasswordLink));
 
         return Constants.RESET_PASSWORD_EMAIL_SENT;

@@ -1,0 +1,94 @@
+#car-list-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #e3e6ef;
+}
+
+#scroller-container {
+    width: 100%;
+    height: 100%;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    display: flex;
+    scrollbar-width: none;
+}
+
+.ad-box {
+    position: relative;
+    flex: 0 0 auto;
+    height: 500px;
+    width: 300px;
+    margin: 20px;
+    transition: transform ease-in-out 0.2s;
+    background-color: whitesmoke;
+    border-radius: 20px;
+}
+
+.ad-box::-webkit-scrollbar {
+    display: none;
+}
+
+.ad-box:hover {
+    transform: scale(1.05); 
+    cursor: pointer;
+}
+
+.ad-image {
+    width: 100%;
+    height: 200px;
+    padding: 20px;
+}
+
+.sliders {
+    transition: transform ease-in-out 0.2s;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.sliders:hover {
+    transform: scale(1.3);
+    color: rgba(0, 0, 0, 1);
+}
+
+.car-info {
+    padding: 20px;
+    padding-top: 0px;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-container {
+    display:flex;
+}
+
+.info-title{
+    position: relative;
+    flex: 1;
+}
+
+.title-text {
+    position: absolute;
+    bottom: 0;
+}
+
+#brand {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+#model {
+    margin-left: 5px;
+    font-size: 15px;
+}
+
+#generation {
+    margin-left: 5px;
+    font-size: 15px;
+}
+
+#price, #kilometrage, #year, #country, #fuelType {
+    flex: 1;
+    font-size: 16px;
+}

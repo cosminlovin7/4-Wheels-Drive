@@ -1,11 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
-import NavigationBar from './components/NavigationBar';
 import Header from './components/Header';
-import SearchCar from './components/SearchCar';
+import SearchCar from './components/car-search/SearchCar';
 import Footer from './components/Footer';
+import React, { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    document.title = "4 Wheels Drive";
+  }, []);
+
   return (
     <div className="main">
       <Header/>  

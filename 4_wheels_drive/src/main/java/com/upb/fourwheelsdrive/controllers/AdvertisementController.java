@@ -6,11 +6,9 @@ import com.upb.fourwheelsdrive.model.BaseResponse;
 import com.upb.fourwheelsdrive.model.car_advertisement.dto.*;
 import com.upb.fourwheelsdrive.service.AdvertisementService;
 import com.upb.fourwheelsdrive.utils.Constants;
-import jakarta.servlet.Filter;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -157,27 +155,19 @@ public class AdvertisementController {
             @RequestParam(value = "brandId", required = false) Long brandId,
             @RequestParam(value = "modelId", required = false) Long modelId,
             @RequestParam(value = "generationId", required = false) Long generationId,
-            @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "minYear", required = false) Integer minYear,
             @RequestParam(value = "maxYear", required = false) Integer maxYear,
-            @RequestParam(value = "price", required = false) Double price,
             @RequestParam(value = "minPrice", required = false) Double minPrice,
-            @RequestParam(value = "maxPrice", required = false) Double maxPrice,
-            @RequestParam(value = "fuelType", required = false) String fuelType,
-            @RequestParam(value = "country", required = false) String country
+            @RequestParam(value = "maxPrice", required = false) Double maxPrice
     ) {
         FilterParamsRequest filterParamsRequest = new FilterParamsRequest(
                 brandId,
                 modelId,
                 generationId,
-                year,
                 minYear,
                 maxYear,
-                price,
                 minPrice,
-                maxPrice,
-                fuelType,
-                country
+                maxPrice
         );
 
         log.info(filterParamsRequest.toString());

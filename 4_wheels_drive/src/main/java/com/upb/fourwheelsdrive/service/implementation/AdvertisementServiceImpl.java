@@ -5,6 +5,7 @@ import com.upb.fourwheelsdrive.exceptions.BaseException;
 import com.upb.fourwheelsdrive.model.car_advertisement.*;
 import com.upb.fourwheelsdrive.model.car_advertisement.dto.*;
 import com.upb.fourwheelsdrive.model.car_advertisement.enums.*;
+import com.upb.fourwheelsdrive.model.photo_storage.Photo;
 import com.upb.fourwheelsdrive.model.user.ApplicationUser;
 import com.upb.fourwheelsdrive.repository.*;
 import com.upb.fourwheelsdrive.service.AdvertisementService;
@@ -35,10 +36,10 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private CarModelGenerationRepository carModelGenerationRepository;
     private CarBrandRepository carBrandRepository;
     private ApplicationUserRepository applicationUserRepository;
+    private PhotoRepository photoRepository;
 
     private JwtService jwtServiceImpl;
     private UserDetailsService applicationUserServiceImpl;
-    private EntityManager entityManager;
 
     @Transactional
     @Override
@@ -97,6 +98,14 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         carAdvert.setCarOptions(carOptions);
 
         carAdvertRepository.save(carAdvert);
+
+        List<String> photosData = advertRequest.getPhotosData();
+
+        for (String photoData : photosData) {
+            Photo newPhoto = new Photo(photoData, carAdvert);
+
+            photoRepository.save(newPhoto);
+        }
     }
 
     @Transactional
@@ -229,28 +238,14 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public List<CarAdvertDTO> getFilteredCarAdverts(FilterParamsRequest filterParamsRequest) {
-        if (filterParamsRequest.getPrice() != null &&
-                (filterParamsRequest.getMinPrice() != null || filterParamsRequest.getMaxPrice() != null)) {
-            throw new BaseException(Constants.INVALID_FILTER_PARAMS, HttpStatus.BAD_REQUEST);
-        }
-
-        if (filterParamsRequest.getYear() != null &&
-                (filterParamsRequest.getMinYear() != null || filterParamsRequest.getMaxYear() != null)) {
-            throw new BaseException(Constants.INVALID_FILTER_PARAMS, HttpStatus.BAD_REQUEST);
-        }
-
         List<CarAdvert> carAdverts = carAdvertRepository.getFilteredCarAdverts(
                 filterParamsRequest.getBrandId(),
                 filterParamsRequest.getModelId(),
                 filterParamsRequest.getGenerationId(),
-                filterParamsRequest.getYear(),
                 filterParamsRequest.getMinYear(),
                 filterParamsRequest.getMaxYear(),
-                filterParamsRequest.getPrice(),
                 filterParamsRequest.getMinPrice(),
-                filterParamsRequest.getMaxPrice(),
-                filterParamsRequest.getFuelType(),
-                filterParamsRequest.getCountry()
+                filterParamsRequest.getMaxPrice()
         );
 
         return mapCarAdvertListToCarAdvertDTOList(carAdverts);

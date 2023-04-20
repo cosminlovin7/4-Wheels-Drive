@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 public class AdvertRequest {
@@ -31,4 +33,6 @@ public class AdvertRequest {
     private CarOptionsDTO carOptionsDTO;
 
     private String description;
+    @JsonProperty("photos")
+    private List<String> photosData;
 }

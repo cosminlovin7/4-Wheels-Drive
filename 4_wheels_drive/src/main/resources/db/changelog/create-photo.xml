@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="0" author="cosmin">
+        <createTable tableName="photo">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="data" type="text"/>
+            <column name="car_advert_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="photo"
+                                 baseColumnNames="car_advert_id"
+                                 constraintName="car_advert_fk"
+                                 referencedTableName="car_advert"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <createSequence sequenceName="photo_sequence"
+                        schemaName="public"
+                        startValue="1"
+                        minValue="1"
+                        maxValue="2147483647"
+                        incrementBy="1"
+                        dataType="bigint"
+                        cycle="false"/>
+    </changeSet>
+</databaseChangeLog>

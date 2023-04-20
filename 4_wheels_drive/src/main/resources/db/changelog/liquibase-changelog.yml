@@ -9,3 +9,5 @@ databaseChangeLog:
       file: db/changelog/create-car-advert.xml
   - include:
       file: db/changelog/create-user-favorite-ad.xml
+  - include:
+      file: db/changelog/create-photo.xml

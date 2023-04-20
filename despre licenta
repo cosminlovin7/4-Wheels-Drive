@@ -1,0 +1,54 @@
+import { EuroSharp } from "@material-ui/icons"
+
+o data la 12 ore trebuie sa spunem cat e ceasul
+de partea asta s-a ocupat el pentru ca protoclul
+de comunicatie este proprietar
+
+primim acces din serverul de lora, un cont de mqtt
+unde sa primesc mesajele de la senzor
+mesajele care vin de la senzori catre serverul
+nodeRed. preluam mesajul, o parsam catre Smart 
+Parking Parser, apoi ma uit in MQTT Downlink Output,
+altfel scriu in baza de date
+.
+
+Eu ar rtebui sa implementez doar parsarea de la 
+serverul-> Smart Parking Parser -> 
+trecere in InfluxDB output
+
+libelium smart Parking
+
+in fisierul Smart parking -> o sa gasesc cum 
+functioneaza NoteAddOutlined, ce ma intereseaza e 
+ca are doua chestii, un mesaj Periodic ( la 12 ore)
+si atunci cand se schimba statusul locului -> 
+transmite un alt mesaj
+Avem varianta de Europa 
+
+Ma intereseaza frame-urile de upling, 1, 2, 7
+keep-alive - periodic (1)
+2 - configuration up link (poate fi ignorat)
+imi trebuie doar 0-1 ( info frame, si 1)
+
+fiecare are un header de 2 octeti si un payload de 8
+octeti
+header-ul are 2 octeti unde primul octet : 
+sequence number -> ar trebui sa ma uit sa nu iau duplicate 
+primul octet -> 3 biti : frame type, 4 : senzor CompassCalibration, 5: cconfig etc 
+
+
+Serverul de lora : (LoRaWan)
+the things stack mqtt integration
+conecteaza device-urile de lora si gateway-urile lora
+lora -> tehnologia de comunicatie 
+
+trebuie sa ma conectez la Security : 
+username smartparking
+
+unde este +, se inlocuieste cu numele device-ului 
+sunt 
++ e doar pentru un nivel 
+
+base 64 decode al mesajelor primite 
+
+pentru grafana:

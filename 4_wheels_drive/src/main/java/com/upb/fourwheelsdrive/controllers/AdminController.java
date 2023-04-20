@@ -26,8 +26,6 @@ public class AdminController {
     public ResponseEntity<BrandNamesDTO> getBrands(
             @NonNull HttpServletRequest request
     ) {
-        checkIfUserIsAdmin(request);
-
         BrandNamesDTO brandNamesDTO = adminServiceImpl.getBrands();
 
         return ResponseEntity.status(HttpStatus.OK).body(brandNamesDTO);
@@ -38,8 +36,6 @@ public class AdminController {
             @RequestParam("brand") String brandName,
             @NonNull HttpServletRequest request
     ) {
-        checkIfUserIsAdmin(request);
-
         ModelNamesDTO modelNamesDTO = adminServiceImpl.getModels(brandName);
 
         return ResponseEntity.status(HttpStatus.OK).body(modelNamesDTO);
@@ -51,8 +47,6 @@ public class AdminController {
             @RequestParam("model") String modelName,
             @NonNull HttpServletRequest request
     ) {
-        checkIfUserIsAdmin(request);
-
         ModelGenerationNamesDTO modelGenerationNamesDTO = adminServiceImpl.getModelGenerations(brandName, modelName);
 
         return ResponseEntity.status(HttpStatus.OK).body(modelGenerationNamesDTO);

@@ -6,6 +6,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class CarAdvertDTO {
     private Long id;
@@ -25,4 +27,6 @@ public class CarAdvertDTO {
     private CarEngineDTO carEngineDTO;
     @JsonProperty("options")
     private CarOptionsDTO carOptionsDTO;
+    @JsonProperty("photos")
+    private List<String> photosData;
 }
