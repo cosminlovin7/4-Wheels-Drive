@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
     @Query("SELECT p FROM Photo p WHERE p.carAdvert.id = :car_advert_id")
-    List<String> getAdPhotos(@Param("car_advert_id") Long car_advert_id);
+    List<Photo> getAdPhotos(@Param("car_advert_id") Long car_advert_id);
 }

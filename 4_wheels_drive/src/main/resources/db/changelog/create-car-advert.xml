@@ -357,4 +357,10 @@
                                  referencedColumnNames="id"
                                  onDelete="CASCADE"/>
     </changeSet>
+
+    <changeSet id="8" author="cosmin">
+        <addColumn tableName="car_advert">
+            <column name="km" type="int"></column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

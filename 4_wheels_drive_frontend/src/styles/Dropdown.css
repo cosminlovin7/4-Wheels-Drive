@@ -38,6 +38,10 @@
     scrollbar-width: none;
 }
 
+.dropdown-options::-webkit-scrollbar {
+    display: none;
+}
+
 .dropdown-button .dropdown-item {
     background: #fff;
     transition: transform ease-in-out 0.2s;
@@ -48,7 +52,7 @@
     padding: 10px;
 }
 
-.dropdown-button:hover {
+.button:hover {
     background: black;
     color: white;
     cursor: pointer;
@@ -63,4 +67,8 @@
 .dropdown-item-selected {
     background: black;
     color: white;
+}
+
+.dropdown-button-unavailable {
+    color:#e5e7eb;
 }

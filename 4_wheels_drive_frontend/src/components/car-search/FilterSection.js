@@ -22,24 +22,30 @@ export default function FilterSection(params) {
         'Generation': [generationActive, setGenerationActive]
     }
 
+    var buttonSelected = {
+        'Brand': [brandSelected, setBrandSelected],
+        'Model': [modelSelected, setModelSelected],
+        'Generation': [generationSelected, setGenerationSelected]
+    }
+
     return (
         <div id="filter-container">
             <div id="filter-section">
                 <Dropdown name="Brand" 
-                          options={params.options} 
-                          selected={brandSelected} 
-                          setSelected={setBrandSelected}
-                          buttonStates={buttonStates}/>
+                          options={params.brands} 
+                          otherActive={true}
+                          buttonStates={buttonStates}
+                          buttonSelected={buttonSelected}/>
                 <Dropdown name="Model" 
-                          options={params.options} 
-                          selected={modelSelected} 
-                          setSelected={setModelSelected}
-                          buttonStates={buttonStates}/>
+                          options={params.models} 
+                          otherActive={brandSelected}
+                          buttonStates={buttonStates}
+                          buttonSelected={buttonSelected}/>
                 <Dropdown name="Generation" 
-                          options={params.options} 
-                          selected={generationSelected} 
-                          setSelected={setGenerationSelected}
-                          buttonStates={buttonStates}/>
+                          options={params.generations} 
+                          otherActive={modelSelected}
+                          buttonStates={buttonStates}
+                          buttonSelected={buttonSelected}/>
                 <DataInput defaultText="Min. Price" value={minPrice} setValue={setMinPrice}/>
                 <DataInput defaultText="Max. Price" value={maxPrice} setValue={setMaxPrice}/>
                 <DataInput defaultText="Min. Year" value={minYear} setValue={setMinYear}/>

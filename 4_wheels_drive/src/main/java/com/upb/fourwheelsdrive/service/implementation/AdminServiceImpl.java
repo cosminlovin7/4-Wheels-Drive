@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,25 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public List<CarModelDTO> getAllModels() {
+        List<CarModelDTO> modelNamesDTO = new ArrayList<>();
+        List<CarModel> carModelList = carModelRepository.findAll();
+
+        for (CarModel carModel : carModelList) {
+            CarModelDTO newCarModelDTO = new CarModelDTO(
+                    carModel.getId(),
+                    carModel.getModelName(),
+                    carModel.getCarBrand().getId(),
+                    carModel.getCarBrand().getBrandName()
+            );
+
+            modelNamesDTO.add(newCarModelDTO);
+        }
+
+        return modelNamesDTO;
+    }
+
+    @Override
     public ModelGenerationNamesDTO getModelGenerations(String brandName, String modelName) {
         ModelGenerationNamesDTO modelGenerationNamesDTO = new ModelGenerationNamesDTO();
 
@@ -81,6 +101,24 @@ public class AdminServiceImpl implements AdminService {
         modelGenerationNamesDTO.setGenerations(carGenerationDTOList);
 
         return modelGenerationNamesDTO;
+    }
+
+    @Override
+    public List<CarGenerationDTO> getAllGenerations() {
+        List<CarGenerationDTO> carGenerationDTOList = new ArrayList<>();
+
+        List<CarModelGeneration> carModelGenerationList = carModelGenerationRepository.findAll();
+
+        for (CarModelGeneration carModelGeneration : carModelGenerationList) {
+            carGenerationDTOList.add(new CarGenerationDTO(
+                    carModelGeneration.getId(),
+                    carModelGeneration.getGenerationName(),
+                    carModelGeneration.getCarModel().getId(),
+                    carModelGeneration.getCarModel().getModelName()
+            ));
+        }
+
+        return carGenerationDTOList;
     }
 
     @Override

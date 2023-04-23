@@ -20,6 +20,7 @@ import java.util.List;
 @RequestMapping("/vehicles")
 @AllArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "http://localhost:3000")
 public class AdvertisementController {
 
     private final AdvertisementService advertisementServiceImpl;

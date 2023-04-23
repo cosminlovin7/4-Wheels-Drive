@@ -36,8 +36,10 @@ public class SecurityConfiguration {
                                  "/reset-password/**",
                                  "/vehicles",
                                  "/admin/control/brands",
-                                 "/admin/control/models",
-                                 "/admin/control/generations").permitAll()
+                                 "/admin/control/models/**",
+                                 "/admin/control/generations/**",
+                                 "/vehicles",
+                                 "/vehicles/filter/**").permitAll()
 //                .requestMatchers("/test").hasRole(ApplicationUserRoles.USER.name())
                 .anyRequest()
                 .authenticated()

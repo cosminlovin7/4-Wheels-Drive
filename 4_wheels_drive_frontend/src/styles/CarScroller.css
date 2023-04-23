@@ -1,8 +1,9 @@
-#car-list-container {
+.car-list-container {
     position: relative;
     display: flex;
     align-items: center;
     background-color: #e3e6ef;
+    margin-bottom: 20px;
 }
 
 #scroller-container {
@@ -14,6 +15,16 @@
     scrollbar-width: none;
 }
 
+#not-found-container {
+    display:flex;
+    justify-content: center;
+    background-color: #e3e6ef;
+    width: 100%;
+    height: 100%;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
 .ad-box {
     position: relative;
     flex: 0 0 auto;
@@ -22,10 +33,10 @@
     margin: 20px;
     transition: transform ease-in-out 0.2s;
     background-color: whitesmoke;
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
-.ad-box::-webkit-scrollbar {
+#scroller-container::-webkit-scrollbar {
     display: none;
 }
 
@@ -38,6 +49,20 @@
     width: 100%;
     height: 200px;
     padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#not-found-img {
+    width: auto;
+    height: 500px;
 }
 
 .sliders {
@@ -73,22 +98,38 @@
     bottom: 0;
 }
 
-#brand {
+.car-name {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+#brand-container, #model-container, #generation-container {
+    position: relative;
+    height: 30px;
+    width: 100%;
+}
+
+#brand-container {
     font-size: 25px;
     font-weight: 800;
 }
 
-#model {
-    margin-left: 5px;
-    font-size: 15px;
+#model-generation-container {
+    margin-top: auto;
+    margin-right: 5px;
+    font-size: 15.5px;
 }
 
 #generation {
+    margin-top: auto;
     margin-left: 5px;
     font-size: 15px;
 }
 
 #price, #kilometrage, #year, #country, #fuelType {
     flex: 1;
-    font-size: 16px;
+    font-size: 11px;
 }

@@ -16,6 +16,7 @@ public class CarAdvertDTO {
     private String generation;
     private Double price;
     private Integer year;
+    private Integer km;
     @Enumerated(EnumType.STRING)
     private FuelType fuelType;
     private String country;

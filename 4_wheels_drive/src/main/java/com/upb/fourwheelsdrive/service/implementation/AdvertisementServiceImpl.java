@@ -1,6 +1,5 @@
 package com.upb.fourwheelsdrive.service.implementation;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.upb.fourwheelsdrive.exceptions.BaseException;
 import com.upb.fourwheelsdrive.model.car_advertisement.*;
 import com.upb.fourwheelsdrive.model.car_advertisement.dto.*;
@@ -11,12 +10,9 @@ import com.upb.fourwheelsdrive.repository.*;
 import com.upb.fourwheelsdrive.service.AdvertisementService;
 import com.upb.fourwheelsdrive.service.JwtService;
 import com.upb.fourwheelsdrive.utils.Constants;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -152,6 +148,21 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         carAdvert.setCarModel(carModel);
         carAdvert.setCarModelGeneration(carModelGeneration);
 
+        List<Photo> carAdvertPhotos = photoRepository.getAdPhotos(carAdvertId);
+
+        if (carAdvertPhotos.size() == 0) {
+            Photo newPhoto = new Photo();
+            newPhoto.setCarAdvert(carAdvert);
+            newPhoto.setData(advertRequest.getPhotosData().get(0));
+
+            photoRepository.save(newPhoto);
+        } else {
+            Photo currentPhoto = carAdvertPhotos.get(0);
+            currentPhoto.setData(advertRequest.getPhotosData().get(0));
+
+            photoRepository.save(currentPhoto);
+        }
+
         carBodyRepository.save(editedCarBody);
         carEngineRepository.save(editedCarEngine);
         carOptionsRepository.save(editedCarOptions);
@@ -262,6 +273,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             carAdvertDTO.setGeneration(carAdvert.getCarModelGeneration().getGenerationName());
             carAdvertDTO.setPrice(carAdvert.getPrice());
             carAdvertDTO.setYear(carAdvert.getYear());
+            carAdvertDTO.setKm(carAdvert.getKm());
             carAdvertDTO.setFuelType(carAdvert.getFuelType());
             carAdvertDTO.setCountry(carAdvert.getCountry());
             carAdvertDTO.setDescription(carAdvert.getDescription());
@@ -279,6 +291,16 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             carAdvertDTO.setCarEngineDTO(carEngineDTO);
             carAdvertDTO.setCarOptionsDTO(carOptionsDTO);
 
+            List<Photo> carAdvertPhotos = photoRepository.getAdPhotos(carAdvert.getId());
+            List<String> carAdvertPhotoData = new ArrayList<>();
+
+            for (Photo carAdvertPhoto : carAdvertPhotos) {
+                carAdvertPhotoData.add(carAdvertPhoto.getData());
+            }
+
+            if (carAdvertPhotoData.size() > 0)
+                carAdvertDTO.setPhotosData(carAdvertPhotoData);
+
             carAdvertDTOList.add(carAdvertDTO);
         }
 
@@ -294,18 +316,18 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     private void mapCarBody(CarBody carBody, CarBodyDTO carBodyDTO) {
-        if (carBodyDTO.getBodyType() != null)
-            carBody.setBodyType(BodyType.valueOf(carBodyDTO.getBodyType()));
-        if (carBodyDTO.getColorType() != null)
-            carBody.setColorType(ColorType.valueOf(carBodyDTO.getColorType()));
-        carBody.setNrOfSeats(carBodyDTO.getNrOfSeats());
+        if (carBody.getBodyType() != null)
+            carBodyDTO.setBodyType(carBody.getBodyType().name());
+        if (carBody.getColorType() != null)
+            carBodyDTO.setColorType(carBody.getColorType().name());
+        carBodyDTO.setNrOfSeats(carBody.getNrOfSeats());
     }
 
     private void mapCarEngine(CarEngine carEngine, CarEngineDTO carEngineDTO) {
-        if (carEngineDTO.getEmissionLevelType() != null)
-            carEngine.setEmissionLevelType(EmissionLevelType.valueOf(carEngineDTO.getEmissionLevelType()));
-        carEngine.setHorsePower(carEngineDTO.getHorsePower());
-        carEngine.setCylinderCapacity(carEngineDTO.getCylinderCapacity());
+        if (carEngine.getEmissionLevelType() != null)
+            carEngineDTO.setEmissionLevelType(carEngineDTO.getEmissionLevelType());
+        carEngineDTO.setHorsePower(carEngine.getHorsePower());
+        carEngineDTO.setCylinderCapacity(carEngine.getCylinderCapacity());
         if (carEngineDTO.getEmissionLevelType() != null)
             carEngine.setTransmissionType(TransmissionType.valueOf(carEngineDTO.getTransmissionType()));
         if (carEngineDTO.getDrivetrain() != null)
@@ -313,28 +335,28 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     private void mapCarOptions(CarOptions carOptions, CarOptionsDTO carOptionsDTO) {
-        carOptions.setHasAppleCarPlay(carOptionsDTO.isHasAppleCarPlay());
-        carOptions.setHasHeadUpDisplay(carOptionsDTO.isHasHeadUpDisplay());
-        carOptions.setHasAndroid(carOptionsDTO.isHasAndroid());
-        carOptions.setHasBluetooth(carOptionsDTO.isHasBluetooth());
-        carOptions.setHasAirConditioning(carOptionsDTO.isHasAirConditioning());
-        carOptions.setHasDualClimatic(carOptionsDTO.isHasDualClimatic());
-        carOptions.setHasPanoramicRoof(carOptionsDTO.isHasPanoramicRoof());
-        carOptions.setHasSunRoof(carOptionsDTO.isHasSunRoof());
-        if (carOptionsDTO.getUpholsteryType() != null)
-            carOptions.setUpholsteryType(UpholsteryType.valueOf(carOptionsDTO.getUpholsteryType()));
-        carOptions.setHasElectricDriverSeat(carOptionsDTO.isHasElectricDriverSeat());
-        carOptions.setHasElectricPassengerSeat(carOptionsDTO.isHasElectricPassengerSeat());
-        carOptions.setHasElectricSeats(carOptionsDTO.isHasElectricSeats());
-        carOptions.setHasHeatedDriverSeat(carOptionsDTO.isHasHeatedDriverSeat());
-        carOptions.setHasHeatedPassengerSeat(carOptionsDTO.isHasHeatedPassengerSeat());
-        carOptions.setHasHeatedSteeringWheel(carOptionsDTO.isHasHeatedSteeringWheel());
-        carOptions.setHasHeatedWindscreen(carOptionsDTO.isHasHeatedWindscreen());
-        carOptions.setHasCruiseControl(carOptionsDTO.isHasCruiseControl());
-        carOptions.setHasDistanceControl(carOptionsDTO.isHasDistanceControl());
-        carOptions.setHas360Cameras(carOptionsDTO.isHas360Cameras());
-        carOptions.setHasParkingSensors(carOptionsDTO.isHasParkingSensors());
-        if (carOptionsDTO.getHeadlightsType() != null)
-            carOptions.setHeadlightsType(HeadlightsType.valueOf(carOptionsDTO.getHeadlightsType()));
+        carOptionsDTO.setHasAppleCarPlay(carOptions.isHasAppleCarPlay());
+        carOptionsDTO.setHasHeadUpDisplay(carOptions.isHasHeadUpDisplay());
+        carOptionsDTO.setHasAndroid(carOptions.isHasAndroid());
+        carOptionsDTO.setHasBluetooth(carOptions.isHasBluetooth());
+        carOptionsDTO.setHasAirConditioning(carOptions.isHasAirConditioning());
+        carOptionsDTO.setHasDualClimatic(carOptions.isHasDualClimatic());
+        carOptionsDTO.setHasPanoramicRoof(carOptions.isHasPanoramicRoof());
+        carOptionsDTO.setHasSunRoof(carOptions.isHasSunRoof());
+        if (carOptions.getUpholsteryType() != null)
+            carOptionsDTO.setUpholsteryType(carOptions.getUpholsteryType().name());
+        carOptionsDTO.setHasElectricDriverSeat(carOptions.isHasElectricDriverSeat());
+        carOptionsDTO.setHasElectricPassengerSeat(carOptions.isHasElectricPassengerSeat());
+        carOptionsDTO.setHasElectricSeats(carOptions.isHasElectricSeats());
+        carOptionsDTO.setHasHeatedDriverSeat(carOptions.isHasHeatedDriverSeat());
+        carOptionsDTO.setHasHeatedPassengerSeat(carOptions.isHasHeatedPassengerSeat());
+        carOptionsDTO.setHasHeatedSteeringWheel(carOptions.isHasHeatedSteeringWheel());
+        carOptionsDTO.setHasHeatedWindscreen(carOptions.isHasHeatedWindscreen());
+        carOptionsDTO.setHasCruiseControl(carOptions.isHasCruiseControl());
+        carOptionsDTO.setHasDistanceControl(carOptions.isHasDistanceControl());
+        carOptionsDTO.setHas360Cameras(carOptions.isHas360Cameras());
+        carOptionsDTO.setHasParkingSensors(carOptions.isHasParkingSensors());
+        if (carOptions.getHeadlightsType() != null)
+            carOptionsDTO.setHeadlightsType(carOptions.getHeadlightsType().name());
     }
 }

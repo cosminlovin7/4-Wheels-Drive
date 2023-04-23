@@ -2,35 +2,58 @@ import '../../styles/SearchCar.css'
 import React, { useRef, useState } from 'react';
 import CarScroller from './CarScroller';
 import FilterSection from './FilterSection';
-import axios from 'axios';
+import ViewCarInfo from './ViewCarInfo';
 
-export default function SearchCar() {
-    const options = [
-        { id: 1, name: "Option 1"}, 
-        { id: 2, name: "Option 2"}, 
-        { id: 3, name: "Option 3"}
-    ]; //tomodify
+let filters = null;
 
-    const [brandSelected, setBrandSelected] = useState(null);
-    const [modelSelected, setModelSelected] = useState(null);
-    const [generationSelected, setGenerationSelected] = useState(null);
+export default function SearchCar(props) {
+    let brandModels = [];
+    let modelGenerations = [];
+
+    const [brandSelected, setBrandSelected] = useState({'id': null, 'name': null});
+    const [modelSelected, setModelSelected] = useState({'id': null, 'name': null});
+    const [generationSelected, setGenerationSelected] = useState({'id': null, 'name': null});
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [minYear, setMinYear] = useState('');
     const [maxYear, setMaxYear] = useState('');
+    const [applyFilters, setApplyFilters] = useState(false);
+    const [vehicle, setVehicle] = useState(null);
 
     function handleFilterClick() {
-        const data = {
-            'brandSelected': brandSelected,
-            'modelSelected': modelSelected,
-            'generationSelected': generationSelected,
-            'minPrice': minPrice,
-            'maxPrice': maxPrice,
-            'minYear': minYear,
-            'maxYear': maxYear
-        };
+        if (brandSelected['name'] !== null || modelSelected['name'] !== null || generationSelected['name'] !== null || 
+            minPrice !== '' || maxPrice !== '' || minYear !== '' || maxYear !== '') 
+            filters = {
+                'brandSelected': brandSelected,
+                'modelSelected': modelSelected,
+                'generationSelected': generationSelected,
+                'minPrice': minPrice,
+                'maxPrice': maxPrice,
+                'minYear': minYear,
+                'maxYear': maxYear
+            };
+        else
+            filters = null;
+        
+        setApplyFilters(!applyFilters);
 
-        console.log(data);
+        console.log(filters);
+    }
+    
+    if (brandSelected['name'] !== null) {
+        props.models.map((model) => {
+            if (model['brandName'] === brandSelected['name']) {
+                brandModels.push(model);
+            }
+        });
+    }
+    
+    if (modelSelected['name'] !== null) {
+        props.generations.map((generation) => {
+            if (generation['modelName'] === modelSelected['name']) {
+                modelGenerations.push(generation);
+            }
+        })
     }
 
     return (
@@ -47,8 +70,11 @@ export default function SearchCar() {
                                minYear={[minYear, setMinYear]}
                                maxYear={[maxYear, setMaxYear]}
                                handleClick={handleFilterClick}
-                               options={options}/>
-                <CarScroller/>
+                               brands={props.brands}
+                               models={brandModels}
+                               generations={modelGenerations}/>
+                <CarScroller filters={filters} applyFilters={applyFilters} setVehicle={setVehicle}/>
+                <ViewCarInfo vehicle={vehicle}/>
             </div>
         </div>
     );

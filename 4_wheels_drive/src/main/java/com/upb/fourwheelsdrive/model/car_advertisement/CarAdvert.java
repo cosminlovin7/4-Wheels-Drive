@@ -27,6 +27,7 @@ public class CarAdvert {
     private FuelType fuelType;
     private String country;
     private String description;
+    private Integer km;
     @OneToOne()
     @JoinColumn(
             name = "car_brand_id"

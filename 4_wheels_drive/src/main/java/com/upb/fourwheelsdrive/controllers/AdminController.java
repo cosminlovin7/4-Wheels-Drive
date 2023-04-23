@@ -15,10 +15,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RequestMapping("/admin/control")
 @RestController
 @Slf4j
+@CrossOrigin(origins = "http://localhost:3000")
 public class AdminController {
     private AdminService adminServiceImpl;
 
@@ -41,6 +44,13 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK).body(modelNamesDTO);
     }
 
+    @GetMapping("/models/all")
+    public ResponseEntity<List<CarModelDTO>> getAllModels() {
+        List<CarModelDTO> modelNamesDTO = adminServiceImpl.getAllModels();
+
+        return ResponseEntity.status(HttpStatus.OK).body(modelNamesDTO);
+    }
+
     @GetMapping("/generations")
     public ResponseEntity<ModelGenerationNamesDTO> getModels(
             @RequestParam("brand") String brandName,
@@ -50,6 +60,13 @@ public class AdminController {
         ModelGenerationNamesDTO modelGenerationNamesDTO = adminServiceImpl.getModelGenerations(brandName, modelName);
 
         return ResponseEntity.status(HttpStatus.OK).body(modelGenerationNamesDTO);
+    }
+
+    @GetMapping("/generations/all")
+    public ResponseEntity<List<CarGenerationDTO>> getAllGenerations() {
+        List<CarGenerationDTO> carGenerationDTOList = adminServiceImpl.getAllGenerations();
+
+        return ResponseEntity.status(HttpStatus.OK).body(carGenerationDTOList);
     }
 
     @PostMapping("/add/brand")
