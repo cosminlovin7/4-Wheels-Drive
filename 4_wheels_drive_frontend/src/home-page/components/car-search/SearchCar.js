@@ -73,8 +73,12 @@ export default function SearchCar(props) {
                                brands={props.brands}
                                models={brandModels}
                                generations={modelGenerations}/>
-                <CarScroller filters={filters} applyFilters={applyFilters} setVehicle={setVehicle}/>
-                <ViewCarInfo vehicle={vehicle}/>
+                <CarScroller filters={filters} 
+                             applyFilters={applyFilters} 
+                             setVehicle={setVehicle} 
+                             authToken={props.authToken} 
+                             setAuthToken={props.setAuthToken}/>
+                <ViewCarInfo id='car-info-container' vehicle={vehicle}/>
             </div>
         </div>
     );

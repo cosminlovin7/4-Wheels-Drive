@@ -80,6 +80,7 @@ public class AdvertisementController {
     public ResponseEntity<GetAdvertsResponse> getCarAdverts(
             @NonNull HttpServletRequest request
     ) {
+        log.info("Intra in request...");
         String jwtToken = getJwtToken(request);
 
         List<CarAdvertDTO> carAdvertDTOList = advertisementServiceImpl.getCarAdverts(jwtToken);

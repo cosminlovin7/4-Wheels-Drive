@@ -3,14 +3,15 @@ import React, { useState } from 'react';
 
 export default function Dropdown(props) {
     function activateOptions() {
-        for (let key in props.buttonStates) {
-            const [active, setActive] = props.buttonStates[key];
-            if (key === props.name && props.otherActive !== null) {
-                setActive(!active);
-            } else {
-                setActive(false);
+        if (props.otherActive['name'] !== null)
+            for (let key in props.buttonStates) {
+                const [active, setActive] = props.buttonStates[key];
+                if (key === props.name && props.otherActive !== null) {
+                    setActive(!active);
+                } else {
+                    setActive(false);
+                }
             }
-        }
     }
 
     function setOptionSelected(option) {
@@ -42,8 +43,8 @@ export default function Dropdown(props) {
 
     return (
         <div className="dropdown">
-            <div className={props.otherActive['name'] !== null ? 'dropdown-button button' : 'dropdown-button dropdown-button-unavailable'} onClick={activateOptions}>{props.name}<span className="arrow">▼</span></div>
-            {props.buttonStates[props.name][0] && (<div className="dropdown-options">
+            <div className={props.otherActive['name'] !== null ? 'dropdown-button dropdown-button-available' : 'dropdown-button dropdown-button-unavailable'} onClick={activateOptions}>{props.name}<span className="arrow">▼</span></div>
+            {props.buttonStates[props.name][0] === true && (<div className="dropdown-options">
                     {
                         props.options.map((option) => (
                             <div key={option.id} 

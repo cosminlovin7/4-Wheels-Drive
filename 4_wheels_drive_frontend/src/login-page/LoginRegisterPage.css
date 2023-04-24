@@ -1,0 +1,102 @@
+.login-register-container {
+    display:flex;
+    font-family: "Montserrat";
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.container{
+    flex: 1;
+    background-color: white;
+    height: 100vh;
+    width: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container, .register-container{
+    height: 60vh;
+    width: 50vh;
+    border-radius: 10px;
+    padding: 100px 50px 100px 50px;
+    box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
+
+    overflow: hidden;
+}
+
+.login-container {
+    background-color: white;
+}
+
+.register-container {
+    background-color: white;
+}
+
+.not-selected {
+    filter: blur(5px);
+    background-color: #e3e6ef;
+}
+
+.login-text {
+    font-size: 25px;
+    padding-bottom: 5px;
+}
+
+.logo-text {
+    font-size: 11px;
+    font-weight: 500;
+    color: grey;
+}
+
+.text-container {
+    margin-bottom: 75px;
+}
+
+.rtext-container {
+    margin-bottom: 50px;
+}
+
+.username-text, .password-text, .email-text {
+    font-size: 13px;
+    font-weight: 500;
+
+}
+
+.username-input, .password-input, .email-input {
+    width: 100%;
+    box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
+    padding: 15px 20px;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 1px;
+    outline: none;
+}
+
+.login-form {
+    margin-bottom: 20px;
+}
+
+.button {
+    background-color: white;
+    border: solid black 2px;
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.forgot-password-button {
+    text-decoration: underline;
+    text-align: center;
+    font-size: 9px;
+    padding: 10px;
+}

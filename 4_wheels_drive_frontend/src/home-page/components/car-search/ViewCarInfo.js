@@ -4,14 +4,14 @@ export default function ViewCarInfo(props) {
     return (
         <>
             {props.vehicle !== null && (
-                <div id="car-info-container" className="view-car-info-container">
+                <div id={props.id} className="view-car-info-container">
                     <div className="basic-info-container">
                         <div className="img-container">
                             {props.vehicle['photos'] !== null && (
                                 <img className="img" src={props.vehicle['photos'][0]} alt='Image'/>
                             )}
                         </div>
-                        <div className="container">
+                        <div className="details-container">
                             <div>Details</div>
                             <div className="info-container">
                                 <div className="info-fields">
@@ -23,7 +23,6 @@ export default function ViewCarInfo(props) {
                                     <div>Price</div>
                                     <div>Fuel Type</div>
                                     <div>Country</div>
-                                    <div>Body Type</div>
                                     <div>Color</div>
                                     <div>Number of Seats</div>
                                     <div>Emission Level</div>

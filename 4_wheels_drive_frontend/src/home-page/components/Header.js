@@ -3,11 +3,11 @@ import "typeface-montserrat";
 import NavigationBar from './NavigationBar';
 import FrontSlider from './FrontSlider';
 
-export default function Header() {
+export default function Header(props) {
     return (
         <div className="header-container">
-            <div className="background-container">
-                <NavigationBar/>
+            <div id="bg-container" className="background-container">
+                <NavigationBar authToken={props.authToken} setAuthToken={props.setAuthToken}/>
                 <FrontSlider/>
             </div>
         </div>

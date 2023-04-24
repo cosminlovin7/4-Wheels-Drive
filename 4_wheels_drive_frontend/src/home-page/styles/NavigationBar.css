@@ -1,0 +1,60 @@
+.navigation-bar {
+    position: absolute;
+    width: 100%;
+    height: 80px;
+    color: black;
+    transition: background-color 0.5s ease-in-out;
+    z-index: 10;
+    padding-left: 10%;
+    padding-right: 10%;
+
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    display: flex;
+    align-items: center;
+}
+
+.navigation-bar.scrolled{
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.logo-container { 
+    flex: 1;
+}
+
+.logo {
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+    font-size: 17px;
+    border: solid black 3px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo:hover {
+    cursor: pointer;
+}
+
+.buttons-container {
+    flex: 2;
+    direction: rtl;
+}
+
+.button-style {
+    font-size: 12px;
+    width: auto;
+    display: inline-block;
+    padding: 20px;
+}
+
+.button-style:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

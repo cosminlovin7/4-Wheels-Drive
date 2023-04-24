@@ -1,10 +1,10 @@
 import '../../styles/CarScroller.css'
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 
 export default function CarScroller(props) {
-    // const [isLoading, setIsLoading] = useState(true);
     const [vehicles, setVehicles] = useState([]);
 
     const slideLeft = () => {
@@ -130,13 +130,45 @@ export default function CarScroller(props) {
         }, 100);  
     }
 
+    function handleAdDoubleClick(vehicle) {
+        if (props.authToken !== null) {
+            const body = {
+                'carAdvertisementId': vehicle['id']
+            }
+            axios.post('http://localhost:8080/vehicles/add/favorite', body, {
+                headers: {
+                    'Authorization': `Bearer ${props.authToken['token']}`
+                }
+                })
+                .then(response => {
+                    toast.success('The advert has been added to favorite list.');
+                })
+                .catch(error => {
+                    console.log('error block');
+                    switch(error.response.data.status) {
+                        case(409):
+                            toast.error(error.response.data.message);
+                            break;
+                        default:
+                            toast.error('An error has occured when trying to add the advert to favorite list. Please try to re-log.');
+                            setTimeout(() => {
+                                props.setAuthToken(null);
+                            }, 2000);
+                            break;
+                    }
+                });
+        } else {
+            toast.error('You have to be logged in to add an advert to favorite list.');
+        }
+    }
+
     return (
         <div className="car-list-container">
             <MdChevronLeft className="sliders" size={40} onClick={slideLeft}/>
             <div id="scroller-container">
                 {
                     vehicles.map((vehicle) => (
-                        <div key={vehicle['id']} className="ad-box" onClick={() => handleVehicleSelected(vehicle)}>
+                        <div key={vehicle['id']} className="ad-box" onDoubleClick={() => handleAdDoubleClick(vehicle)}>
                             <div className="ad-image">
                                 {vehicle['photos'] !== null && (
                                     <img className="image" src={vehicle['photos'][0]} alt='Image'/>
@@ -178,6 +210,11 @@ export default function CarScroller(props) {
                                     <span id="fuelType">{vehicle['fuelType']}</span>
                                 </div>
                             </div>
+                            <div className="view-details-container" onClick={() => handleVehicleSelected(vehicle)}>
+                                    <div className="view-details-button">
+                                        Details
+                                    </div>
+                                </div>
                         </div> 
                     ))
                 }

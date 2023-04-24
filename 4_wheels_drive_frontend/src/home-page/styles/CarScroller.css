@@ -42,7 +42,7 @@
 
 .ad-box:hover {
     transform: scale(1.05); 
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 .ad-image {
@@ -132,4 +132,29 @@
 #price, #kilometrage, #year, #country, #fuelType {
     flex: 1;
     font-size: 11px;
+}
+
+.view-details-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.view-details-button {
+    text-align: center;
+    font-weight: 700;
+    font-size: 11px;
+    background-color: black;
+    border: solid 3px black;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px;
+}
+
+.view-details-button:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
 }

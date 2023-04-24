@@ -1,32 +1,26 @@
-import './App.css';
-import Header from './components/Header';
-import SearchCar from './components/car-search/SearchCar';
-import Footer from './components/Footer';
-import React, { useEffect } from 'react';
-import * as fetchData from './FetchData.js';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './home-page/HomePage';
+import LoginRegisterPage from './login-page/LoginRegisterPage';
+import { useState } from 'react';
 
 function App() {
-  useEffect(() => {
-    document.title = "4 Wheels Drive";
-  }, []);
-
-  let brands = fetchData.getAllBrands();
-  let models = fetchData.getAllModels();
-  let generations = fetchData.getAllGenerations();
+  const [authToken, setAuthToken] = useState(null);
+  const [vehicleToEdit, setVehicleToEdit] = useState(null);
   
-  console.log(brands);
-  console.log(models);
-  console.log(generations);
+  if (authToken != null) {
+    console.log('Authorization Token: ' + authToken['token']);
+  }
 
   return (
-    <div className="main">
-      <Header/>  
-      <SearchCar brands={brands} 
-                 models={models} 
-                 generations={generations}/>
-      <Footer/>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage authToken={authToken} setAuthToken={setAuthToken}/>} />
+        <Route path="/login" element={<LoginRegisterPage setAuthToken={setAuthToken}/>} />
+      </Routes>
+    </Router>
   );
 }
 
 export default App;
+
