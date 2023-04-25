@@ -75,9 +75,7 @@ export default function SearchCar(props) {
                                generations={modelGenerations}/>
                 <CarScroller filters={filters} 
                              applyFilters={applyFilters} 
-                             setVehicle={setVehicle} 
-                             authToken={props.authToken} 
-                             setAuthToken={props.setAuthToken}/>
+                             setVehicle={setVehicle} />
                 <ViewCarInfo id='car-info-container' vehicle={vehicle}/>
             </div>
         </div>

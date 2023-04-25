@@ -7,7 +7,7 @@ export default function Header(props) {
     return (
         <div className="header-container">
             <div id="bg-container" className="background-container">
-                <NavigationBar authToken={props.authToken} setAuthToken={props.setAuthToken}/>
+                <NavigationBar/>
                 <FrontSlider/>
             </div>
         </div>

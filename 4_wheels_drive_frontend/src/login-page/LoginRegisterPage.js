@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import InputForm from './InputForm.js';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function LoginRegisterPage(props) {
     const [loginSelected, setLoginSelected] = useState(true);
@@ -31,7 +32,8 @@ function LoginRegisterPage(props) {
                 axios.post(process.env.REACT_APP_LOGIN_URL, request)
                 .then(response => {
                     toast.success(response.data.message);
-                    props.setAuthToken(response.data);
+                    // props.setAuthToken(response.data);
+                    Cookies.set('authToken', response.data.token);
                     navigate('/');
                 })
                 .catch(error => {

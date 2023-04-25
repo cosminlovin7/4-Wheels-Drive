@@ -2,10 +2,12 @@ import '../../styles/CarScroller.css'
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import Cookies from 'js-cookie';
 import axios from 'axios';
 
 export default function CarScroller(props) {
     const [vehicles, setVehicles] = useState([]);
+    const token = Cookies.get('authToken') || null;
 
     const slideLeft = () => {
         var slider = document.getElementById("scroller-container")
@@ -131,13 +133,13 @@ export default function CarScroller(props) {
     }
 
     function handleAdDoubleClick(vehicle) {
-        if (props.authToken !== null) {
+        if (token !== null) {
             const body = {
                 'carAdvertisementId': vehicle['id']
             }
             axios.post('http://localhost:8080/vehicles/add/favorite', body, {
                 headers: {
-                    'Authorization': `Bearer ${props.authToken['token']}`
+                    'Authorization': `Bearer ${token}`
                 }
                 })
                 .then(response => {
@@ -152,7 +154,8 @@ export default function CarScroller(props) {
                         default:
                             toast.error('An error has occured when trying to add the advert to favorite list. Please try to re-log.');
                             setTimeout(() => {
-                                props.setAuthToken(null);
+                                Cookies.remove('authToken');
+                                window.location.reload();
                             }, 2000);
                             break;
                     }

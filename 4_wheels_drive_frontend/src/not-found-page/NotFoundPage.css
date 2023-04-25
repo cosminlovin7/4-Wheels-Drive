@@ -1,0 +1,33 @@
+.not-found-container {
+    margin: 0 auto;
+    overflow: hidden;
+    position:relative;
+    box-sizing: border-box;
+    font-family: "Montserrat";
+}
+
+.not-found-background {
+    background-image: url('https://images.unsplash.com/photo-1521405617584-1d9867aecad3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cm9sbHMlMjByb3ljZSUyMGxvZ298ZW58MHx8MHx8&w=1000&q=80');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.error-text-container {
+    text-align: center;
+}
+
+.error-text {
+    text-align: center;
+}
+  

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ViewCarInfo from '../car-search/ViewCarInfo.js';
+import Cookies from 'js-cookie';
 
 function MyProfile(props) {
     const [advertisementsTabActive, setAdvertisementsTabActive] = useState(true);
@@ -26,11 +27,13 @@ function MyProfile(props) {
 
     const userFavoritesToDisplay = userFavorites.slice(startIndexF, endIndexF);
 
+    const token = Cookies.get('authToken') || null;
+
     useEffect(() => {
-        if (props.authToken !== null) {
+        if (token !== null) {
             axios.get('http://localhost:8080/vehicles/favorites', {
                 headers: {
-                    'Authorization': `Bearer ${props.authToken['token']}`,
+                    'Authorization': `Bearer ${token}`,
                 },
                 })
                 .then(response => {
@@ -40,13 +43,13 @@ function MyProfile(props) {
                     toast.error('An error has occured.');
                 });
         }
-    }, [props.authToken, favoritesTabActive]);
+    }, [favoritesTabActive]);
 
     useEffect(() => {
-        if (props.authToken !== null) {
+        if (token !== null) {
             axios.get('http://localhost:8080/vehicles/adverts', {
                 headers: {
-                    'Authorization': `Bearer ${props.authToken['token']}`,
+                    'Authorization': `Bearer ${token}`,
                 },
                 })
                 .then(response => {
@@ -56,7 +59,7 @@ function MyProfile(props) {
                     toast.error('An error has occured.');
                 });
         }
-    }, [props.authToken, advertisementsTabActive]);
+    }, [advertisementsTabActive]);
 
     function handleTabButton(buttonName) {
         const adsContainer = document.getElementById('my-advertisements-container');
@@ -130,7 +133,7 @@ function MyProfile(props) {
     function handleDeleteUserAdvert(userAdvert) {
         axios.delete('http://localhost:8080/vehicles/delete?car_advert_id=' + userAdvert['id'], {
             headers: {
-                'Authorization': `Bearer ${props.authToken['token']}`
+                'Authorization': `Bearer ${token}`
             }
             })
             .then(response => {
@@ -148,14 +151,15 @@ function MyProfile(props) {
                 console.log('error block');
                 toast.error('An error has occured when trying to delete the advert. Please try to re-log.');
                 setTimeout(() => {
-                    props.setAuthToken(null);
+                    Cookies.remove('authToken');
+                    window.location.reload();
                 }, 2000)
                 return;
             });
     }
 
     function handleEditUserAdvert(userAdvert) {
-
+        console.log('to modify: ' + userAdvert);
     }
 
     function handleRemoveFavoriteAdvert(userFavorite) {
@@ -164,7 +168,7 @@ function MyProfile(props) {
         }
         axios.post('http://localhost:8080/vehicles/delete/favorite', body, {
             headers: {
-                'Authorization': `Bearer ${props.authToken['token']}`
+                'Authorization': `Bearer ${token}`
             }
             })
             .then(response => {
@@ -182,7 +186,8 @@ function MyProfile(props) {
                 console.log('error block');
                 toast.error('An error has occured when trying to remove the advert. Please try to re-log.');
                 setTimeout(() => {
-                    props.setAuthToken(null);
+                    Cookies.remove('authToken');
+                    window.location.reload();
                 }, 2000)
                 return;
             });
@@ -198,7 +203,7 @@ function MyProfile(props) {
 
     return (
         <>
-            {props.authToken !== null && (
+            {token !== null && (
                 <div id="my-profile">
                     <div id="my-profile-container">
                         <div className="my-profile-title-container">

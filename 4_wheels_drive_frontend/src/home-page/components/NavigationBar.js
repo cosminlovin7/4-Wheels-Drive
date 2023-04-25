@@ -1,11 +1,13 @@
 import '../styles/NavigationBar.css'
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 export default function NavigationBar(props) {
     const [isScrolled, setScrolled] = useState(false);
     const navigate = useNavigate();
-
+    const token = Cookies.get('authToken')  || null;
+    console.log(token);
     useEffect(() => {
         function handleScroll() {
             const scrollTop = document.documentElement.scrollTop;
@@ -33,6 +35,7 @@ export default function NavigationBar(props) {
     }
 
     function handleMyProfileButton() {
+        navigate('/');
         setTimeout(() => {
             const myProfileContainer = document.getElementById('my-profile-container');
             if (myProfileContainer) {
@@ -46,7 +49,8 @@ export default function NavigationBar(props) {
     }
 
     function handleLogOutButton() {
-        props.setAuthToken(null);
+        Cookies.remove('authToken');
+        window.location.reload();
     }
 
     return (
@@ -54,21 +58,24 @@ export default function NavigationBar(props) {
             <div className='logo-container'>
                 <div className='logo' onClick={() => {
                     handleHomeButton();
-                    navigate('/')
+                    navigate('/');
                 }}>4 Wheels Drive</div>
             </div>
             <div className='buttons-container'>
-                {props.authToken !== null && (<div className="button-style" onClick={handleLogOutButton}>Log out</div>)}
-                {props.authToken === null ?
+                {token !== null && (<div className="button-style" onClick={handleLogOutButton}>Log out</div>)}
+                {token === null ?
                     (<div className="button-style">Register</div>) : 
                     (<div className="button-style" onClick={handleMyProfileButton}>My Profile</div>)
                 }
-                {props.authToken === null ? 
+                {token === null ? 
                     (<div className="button-style" onClick={() => navigate('/login')}>Login</div>) : 
-                    (<div className="button-style">Sell</div>)}
+                    (<div className="button-style" onClick={() => navigate('/vehicles/sell')}>Sell</div>)}
                 <div className="button-style">Contact</div>
                 <div className="button-style">About us</div>
-                <div className="button-style" onClick={handleHomeButton}>Home</div>
+                <div className="button-style" onClick={() => {
+                    handleHomeButton();
+                    navigate('/');
+                }}>Home</div>
             </div>
         </div>
     );

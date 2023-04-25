@@ -23,13 +23,13 @@ function HomePage(props) {
   return (
     <div className="main">
       <ToastContainer/>
-      <Header authToken={props.authToken} setAuthToken={props.setAuthToken}/>  
-      <MyProfile authToken={props.authToken} setAuthToken={props.setAuthToken}/>
+      <Header />  
+      <MyProfile
+                 vehicleToEdit={props.vehicleToEdit} 
+                 setVehicleToEdit={props.setVehicleToEdit}/>
       <SearchCar brands={brands} 
                  models={models} 
-                 generations={generations}
-                 authToken={props.authToken}
-                 setAuthToken={props.setAuthToken}/>
+                 generations={generations}/>
       <Footer/>
     </div>
   );
