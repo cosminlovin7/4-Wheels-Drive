@@ -103,6 +103,8 @@
     box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
 
     transition: background-color 0.3s ease-in-out;
+
+    position: relative;
 }
 
 .my-advert-wrapper {
@@ -146,15 +148,22 @@
     background-color: white;
     display: flex;
     flex-direction: row;
-    width: 100px;
+
+}
+
+.edit-delete-container {
+    position: absolute;
+    right: 0;
+    width: 70px;
 }
 
 .remove-advert-container {
+    position: absolute;
+    right: 0;
     display: flex;
-    width: 100px;
+    width: 30px;
     justify-content: center;
     align-items: center;
-    padding: 20px;
 }
 
 .remove-image {

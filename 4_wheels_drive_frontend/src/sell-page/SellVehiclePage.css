@@ -4,17 +4,124 @@
     position:relative;
     box-sizing: border-box;
     font-family: "Montserrat";
+
+    letter-spacing: 1px;
 }
 
 .sell-page-container {
     width: 100%;
-    height: 1000px;
     position: relative;
     margin: auto;
     padding-left: 10%;
     padding-right: 10%;
     width: auto;
-    display: flex;
-    flex-direction: column;
     padding-top: 80px;
+    padding-bottom: 20px;
+}
+
+.sell-details-container, .sell-body-container, .sell-engine-container, .sell-options-container{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    background-color: #e3e6ef;
+    padding: 20px;
+
+    box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.3);
+}
+
+.sell-body-container, .sell-engine-container, .sell-options-container {
+    height: 300px;
+}
+
+.sell-body-container {
+    background-color: white;
+}
+
+.sell-engine-container {
+
+}
+
+.sell-options-container {
+    background-color: white;
+}
+
+.sell-container-title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.upload-photo-button-container, .submit-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+}
+
+.upload-photo-button, .submit-button {
+    padding: 10px 20px 10px 20px;
+    border: solid 3px black;
+    font-weight: 700;
+    letter-spacing: 0px;
+
+    transition: background-color 0.5s ease-in-out;
+}
+
+.upload-photo-button:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.brand-selector, .model-selector, .generation-selector, .price-selector,
+.year-selector, .fuel-types-selector {
+    margin: 20px;
+    position: relative;
+    border: solid 3px black;
+    border-radius: 5px;
+}
+
+.brand-label, .model-label, .generation-label, .price-label,
+.year-label, .fuel-types-label {
+    position: absolute;
+    top: -12.5px;
+    background-color: #e3e6ef;
+    margin-left: 5px;
+    font-weight: 700;
+}
+
+.sell-page-select, .sell-numeric-input {
+    font-weight: 500;
+    padding: 10px;
+    background: none;
+    width: 100%;
+}
+
+.sell-numeric-input {
+    outline: none;
+}
+
+.sell-numeric-input::-webkit-outer-spin-button,
+.sell-numeric-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.sell-numeric-input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.sell-page-option {
+    background-color: white;
+}
+
+.sell-page-options:hover {
+    background-color: black;
+    color: white;
 }

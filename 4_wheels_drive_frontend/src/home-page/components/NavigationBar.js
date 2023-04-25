@@ -7,7 +7,7 @@ export default function NavigationBar(props) {
     const [isScrolled, setScrolled] = useState(false);
     const navigate = useNavigate();
     const token = Cookies.get('authToken')  || null;
-    console.log(token);
+    
     useEffect(() => {
         function handleScroll() {
             const scrollTop = document.documentElement.scrollTop;

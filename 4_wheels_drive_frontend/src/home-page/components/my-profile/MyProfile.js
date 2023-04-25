@@ -40,6 +40,8 @@ function MyProfile(props) {
                     setUserFavorites(response.data.carAdverts);
                 })
                 .catch(error => {
+                    Cookies.remove('authToken');
+                    window.location.reload();
                     toast.error('An error has occured.');
                 });
         }
@@ -56,6 +58,8 @@ function MyProfile(props) {
                     setUserAdverts(response.data.carAdverts);
                 })
                 .catch(error => {
+                    Cookies.remove('authToken');
+                    window.location.reload();
                     toast.error('An error has occured.');
                 });
         }
@@ -71,7 +75,6 @@ function MyProfile(props) {
             setAdvertisementsTabActive(!advertisementsTabActive);
             setFavoritesTabActive(!favoritesTabActive);
             setVehicleToDisplay(null);
-            console.log(buttonName + ' pressed...');
         }
 
         if (buttonName === 'favorites') {
