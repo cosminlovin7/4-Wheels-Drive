@@ -18,7 +18,7 @@ public class AdvertRequest {
     private Integer year;
     @NonNull
     private String fuelType;
-    @NonNull
+    private Integer km;
     private String country;
     @NonNull
     private String modelName;

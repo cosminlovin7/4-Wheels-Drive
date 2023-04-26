@@ -5,8 +5,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ViewCarInfo from '../car-search/ViewCarInfo.js';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 function MyProfile(props) {
+    const navigate = useNavigate();
     const [advertisementsTabActive, setAdvertisementsTabActive] = useState(true);
     const [favoritesTabActive, setFavoritesTabActive] = useState(false);
     const [userAdverts, setUserAdverts] = useState([]);
@@ -162,7 +164,19 @@ function MyProfile(props) {
     }
 
     function handleEditUserAdvert(userAdvert) {
-        console.log('to modify: ' + userAdvert);
+        props.setVehicleToEdit(userAdvert);
+        navigate('/vehicles/edit');
+        setTimeout(() => {
+            const editPageContainer = document.getElementById('edit-page-id');
+            if (editPageContainer) {
+                const elementTop = editPageContainer.getBoundingClientRect().top;
+                window.scrollBy({
+                    top: elementTop,
+                    behavior: 'smooth'
+                })
+            }
+        }, 100); 
+        
     }
 
     function handleRemoveFavoriteAdvert(userFavorite) {
@@ -236,9 +250,9 @@ function MyProfile(props) {
                         <div id="my-advertisements-container">
                             {
                                 userAdvertsToDisplay.map((userAdvert) => (
-                                    <div key={userAdvert['id']} className="my-adverts-container" onClick={() => {handleEditUserAdvert(userAdvert)}}>
+                                    <div key={userAdvert['id']} className="my-adverts-container">
                                         <div className="edit-delete-container">
-                                            <div className="edit-button">
+                                            <div className="edit-button" onClick={() => {handleEditUserAdvert(userAdvert)}}>
                                                 <img src="https://cdn-icons-png.flaticon.com/512/3597/3597088.png" className="edit-image" alt="Delete Button"/>
                                             </div>
                                             <div className="delete-button" onClick={() => {handleDeleteUserAdvert(userAdvert)}}>

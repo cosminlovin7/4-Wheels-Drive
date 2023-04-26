@@ -23,6 +23,7 @@ export default function ViewCarInfo(props) {
                                     <div>Price</div>
                                     <div>Fuel Type</div>
                                     <div>Country</div>
+                                    <div>Body</div>
                                     <div>Color</div>
                                     <div>Number of Seats</div>
                                     <div>Emission Level</div>
@@ -32,22 +33,22 @@ export default function ViewCarInfo(props) {
                                     <div>Drivetrain</div>
                                 </div>
                                 <div className="info-content">
-                                    <div>{props.vehicle['brand']}</div>
-                                    <div>{props.vehicle['model']}</div>
-                                    <div>{props.vehicle['generation']}</div>
-                                    <div>{props.vehicle['year']}</div>
-                                    <div>{props.vehicle['km']}</div>
-                                    <div>{props.vehicle['price']}</div>
-                                    <div>{props.vehicle['fuelType']}</div>
-                                    <div>{props.vehicle['country']}</div>
-                                    <div>{props.vehicle['body']['bodyType']}</div>
-                                    <div>{props.vehicle['body']['colorType']}</div>
-                                    <div>{props.vehicle['body']['nrOfSeats']}</div>
-                                    <div>{props.vehicle['engine']['emissionLevelType']}</div>
-                                    <div>{props.vehicle['engine']['horsePower']}</div>
-                                    <div>{props.vehicle['engine']['cylinderCapacity']}</div>
-                                    <div>{props.vehicle['engine']['transmissionType']}</div>
-                                    <div>{props.vehicle['engine']['drivetrain']}</div>
+                                    <div>{props.vehicle['brand'] !== null ? props.vehicle['brand'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['model'] !== null ? props.vehicle['model'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['generation'] !== null ? props.vehicle['generation'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['year'] !== null ? props.vehicle['year'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['km'] !== null ? props.vehicle['km'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['price'] !== null ? props.vehicle['price'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['fuelType'] !== null ? props.vehicle['fuelType'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['country'] !== null ? props.vehicle['country'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['body']['bodyType'] !== null ? props.vehicle['body']['bodyType'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['body']['colorType'] !== null ? props.vehicle['body']['colorType'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['body']['nrOfSeats'] !== null ? props.vehicle['body']['nrOfSeats'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['engine']['emissionLevelType'] !== null ? props.vehicle['engine']['emissionLevelType'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['engine']['horsePower'] !== null ? props.vehicle['engine']['horsePower'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['engine']['cylinderCapacity'] !== null ? props.vehicle['engine']['cylinderCapacity'].toFixed(1) : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['engine']['transmissionType'] !== null ? props.vehicle['engine']['transmissionType'] : 'NOT SPECIFIED'}</div>
+                                    <div>{props.vehicle['engine']['drivetrain'] !== null ? props.vehicle['engine']['drivetrain'] : 'NOT SPECIFIED'}</div>
                                 </div>
                             </div>
                         </div>

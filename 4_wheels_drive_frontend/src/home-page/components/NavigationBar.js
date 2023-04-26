@@ -48,6 +48,20 @@ export default function NavigationBar(props) {
         }, 100); 
     }
 
+    function handleSellButton() {
+        navigate('/vehicles/sell');
+        setTimeout(() => {
+            const sellPageContainer = document.getElementById('sell-page-id');
+            if (sellPageContainer) {
+                const elementTop = sellPageContainer.getBoundingClientRect().top;
+                window.scrollBy({
+                    top: elementTop,
+                    behavior: 'smooth'
+                })
+            }
+        }, 100); 
+    }
+
     function handleLogOutButton() {
         Cookies.remove('authToken');
         window.location.reload();
@@ -64,12 +78,12 @@ export default function NavigationBar(props) {
             <div className='buttons-container'>
                 {token !== null && (<div className="button-style" onClick={handleLogOutButton}>Log out</div>)}
                 {token === null ?
-                    (<div className="button-style">Register</div>) : 
+                    (<div className="button-style" onClick={() => navigate('/register')}>Register</div>) : 
                     (<div className="button-style" onClick={handleMyProfileButton}>My Profile</div>)
                 }
                 {token === null ? 
                     (<div className="button-style" onClick={() => navigate('/login')}>Login</div>) : 
-                    (<div className="button-style" onClick={() => navigate('/vehicles/sell')}>Sell</div>)}
+                    (<div className="button-style" onClick={handleSellButton}>Sell</div>)}
                 <div className="button-style">Contact</div>
                 <div className="button-style">About us</div>
                 <div className="button-style" onClick={() => {

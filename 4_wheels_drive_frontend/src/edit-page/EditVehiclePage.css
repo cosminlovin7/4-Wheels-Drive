@@ -1,0 +1,159 @@
+.edit-page {
+    margin: 0 auto;
+    overflow: hidden;
+    position:relative;
+    box-sizing: border-box;
+    font-family: "Montserrat";
+
+    letter-spacing: 1px;
+}
+
+.edit-page-container {
+    width: 100%;
+    position: relative;
+    margin: auto;
+    padding-left: 10%;
+    padding-right: 10%;
+    width: auto;
+    padding-top: 80px;
+    padding-bottom: 20px;
+}
+
+.edit-details-container, .edit-body-container, .edit-engine-container, .edit-options-container{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    background-color: #e3e6ef;
+    padding: 20px;
+
+    box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.3);
+}
+
+.edit-body-container, .edit-options-container {
+    background-color: white;
+}
+
+.edit-container-title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.edit-upload-photo-button-container, .edit-submit-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+}
+
+.edit-upload-photo-button, .edit-submit-button {
+    padding: 10px 20px 10px 20px;
+    border: solid 3px black;
+    font-weight: 700;
+    letter-spacing: 0px;
+
+    transition: background-color 0.5s ease-in-out;
+}
+
+.edit-upload-photo-button:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.edit-submit-button:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.edit-brand-selector, .edit-model-selector, .edit-generation-selector, .edit-price-selector,
+.edit-year-selector, .edit-fuel-types-selector, .edit-body-types-selector, .edit-nr-of-seats-selector,
+.edit-color-types-selector, .edit-emission-level-selector, .edit-horse-power-selector, 
+.edit-cylinder-capacity-selector, .edit-drivetrain-selector, .edit-transmission-selector,
+.edit-km-selector, .edit-country-selector {
+    margin: 20px;
+    position: relative;
+    border: solid 3px black;
+    border-radius: 5px;
+}
+
+.edit-brand-label, .edit-model-label, .edit-generation-label, .edit-price-label,
+.edit-year-label, .edit-fuel-types-label, .edit-body-types-label, .edit-nr-of-seats-label, 
+.edit-color-types-label, .edit-emission-level-label, .edit-horse-power-label, 
+.edit-cylinder-capacity-label, .edit-drivetrain-label, .edit-transmission-label,
+.edit-km-label, .edit-country-label {
+    position: absolute;
+    top: -12.5px;
+    background-color: #e3e6ef;
+    margin-left: 5px;
+    font-weight: 700;
+}
+
+.edit-body-types-label, .edit-nr-of-seats-label, .edit-color-types-label {
+    background-color: white;
+}
+
+.edit-page-select, .edit-numeric-input {
+    font-weight: 500;
+    padding: 10px;
+    background: none;
+    width: 100%;
+}
+
+.edit-numeric-input {
+    outline: none;
+}
+
+.edit-numeric-input::-webkit-outer-spin-button,
+.edit-numeric-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.edit-numeric-input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.edit-page-option {
+    background-color: white;
+}
+
+.edit-page-options:hover {
+    background-color: black;
+    color: white;
+}
+
+.edit-extra-options-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.edit-options-checkbox-selector {
+    width: calc(25% - 10px);
+    margin: 5px;
+    background-color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.edit-checkbox-styling {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.edit-label-styling {
+    font-weight: 700;
+}
+
+
+.edit-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-image-wrapper {
+    width: 500px;
+    height: auto;
+}

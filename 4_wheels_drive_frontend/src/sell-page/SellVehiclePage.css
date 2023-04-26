@@ -29,19 +29,7 @@
     box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.3);
 }
 
-.sell-body-container, .sell-engine-container, .sell-options-container {
-    height: 300px;
-}
-
-.sell-body-container {
-    background-color: white;
-}
-
-.sell-engine-container {
-
-}
-
-.sell-options-container {
+.sell-body-container, .sell-options-container {
     background-color: white;
 }
 
@@ -80,7 +68,10 @@
 }
 
 .brand-selector, .model-selector, .generation-selector, .price-selector,
-.year-selector, .fuel-types-selector {
+.year-selector, .fuel-types-selector, .body-types-selector, .nr-of-seats-selector,
+.color-types-selector, .emission-level-selector, .horse-power-selector, 
+.cylinder-capacity-selector, .drivetrain-selector, .transmission-selector,
+.km-selector {
     margin: 20px;
     position: relative;
     border: solid 3px black;
@@ -88,12 +79,19 @@
 }
 
 .brand-label, .model-label, .generation-label, .price-label,
-.year-label, .fuel-types-label {
+.year-label, .fuel-types-label, .body-types-label, .nr-of-seats-label, 
+.color-types-label, .emission-level-label, .horse-power-label, 
+.cylinder-capacity-label, .drivetrain-label, .transmission-label,
+.km-label {
     position: absolute;
     top: -12.5px;
     background-color: #e3e6ef;
     margin-left: 5px;
     font-weight: 700;
+}
+
+.body-types-label, .nr-of-seats-label, .color-types-label {
+    background-color: white;
 }
 
 .sell-page-select, .sell-numeric-input {
@@ -124,4 +122,26 @@
 .sell-page-options:hover {
     background-color: black;
     color: white;
+}
+
+.extra-options-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.options-checkbox-selector {
+    width: calc(25% - 10px);
+    margin: 5px;
+    background-color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.checkbox-styling {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.label-styling {
+    font-weight: 700;
 }

@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 function LoginRegisterPage(props) {
-    const [loginSelected, setLoginSelected] = useState(true);
-    const [registerSelected, setRegisterSelected] = useState(false);
+    const [loginSelected, setLoginSelected] = useState(props.loginSelected);
+    const [registerSelected, setRegisterSelected] = useState(props.registerSelected);
     const navigate = useNavigate();
 
     const [loginUsername, setLoginUsername] = useState('');
@@ -32,12 +32,29 @@ function LoginRegisterPage(props) {
                 axios.post(process.env.REACT_APP_LOGIN_URL, request)
                 .then(response => {
                     toast.success(response.data.message);
-                    // props.setAuthToken(response.data);
                     Cookies.set('authToken', response.data.token);
                     navigate('/');
                 })
                 .catch(error => {
-                    toast.error(error.response.data.message);
+                    switch(error.response.data.status) {
+                        case(401):
+                            if (error.response.data.message === 'The account is not activated.') {
+                                toast.error(error.response.data.message);
+                                axios.get('http://localhost:8080/register/resend?username=' + loginUsername)
+                                    .then(response => {
+                                        toast.success(response.data.message);
+                                    })
+                                    .catch(error => {
+                                        toast.error(error.response.data.message);
+                                    })
+                            } else {
+                                toast.error(error.response.data.message);
+                            }
+                            break;
+                        default:
+                            toast.error(error.response.data.message);
+                            break;
+                    }
                 });
             }
         }
@@ -48,23 +65,56 @@ function LoginRegisterPage(props) {
             if (registerUsername === '' || registerEmail === '' || registerPassword === '') {
                 toast.error('Please, fill the username, email and password fields!');
                 return;
-            } else
-                console.log('Username: ' + registerUsername + ' Email: ' + registerEmail + ' Password: ' + registerPassword);
+            } else {
+                const request = {
+                    'username': registerUsername,
+                    'email': registerEmail,
+                    'password': registerPassword
+                };
+
+                axios.post('http://localhost:8080/register', request)
+                .then(response => {
+                    toast.success(response.data.message);
+                    setRegisterSelected(false);
+                    setRegisterUsername('');
+                    setRegisterEmail('');
+                    setRegisterPassword('');
+                    setLoginSelected(true);
+                })
+                .catch(error => {
+                    toast.error(error.response.data.message);
+                });
+            }
         }
     }
 
     function handleForgotPassword() {
-        console.log('Forgot password...');
+        if (loginUsername !== '') {
+            axios.get('http://localhost:8080/reset-password?username=' + loginUsername)
+            .then(response => {
+                toast.success(response.data.message);
+            })
+            .catch(error => {
+                toast.error(error.response.data.message);
+            });
+        } else {
+            toast.error('Please provide the username.');
+        }
     }
 
     function handleLoginContainerClick() {
         setLoginSelected(true);
         setRegisterSelected(false);
+        setRegisterUsername('');
+        setRegisterEmail('');
+        setRegisterPassword('');
     }
 
     function handleRegisterContainerClick() {
         setLoginSelected(false);
         setRegisterSelected(true);
+        setLoginUsername('');
+        setLoginPassword('');
     }
 
     return (

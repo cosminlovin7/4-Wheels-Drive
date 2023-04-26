@@ -80,7 +80,6 @@
     flex-direction: column;
     overflow: scroll;
     scrollbar-width: none;
-    margin-bottom: 20px;
 }
 
 #my-advertisements-container::-webkit-scrollbar {

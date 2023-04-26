@@ -186,31 +186,31 @@ export default function CarScroller(props) {
                                     <div className="info-title">
                                         <span className="title-text">Price: </span>
                                     </div>
-                                    <span id="price">{vehicle['price']}$</span>
+                                    <span id="price">{vehicle['price'] !== null ? vehicle['price'] : 'n/a'}$</span>
                                 </div>
                                 <div className="info-container">
                                     <div className="info-title">
                                         <span className="title-text">KM: </span>
                                     </div>
-                                    <span id="kilometrage">{vehicle['km']} KM</span>
+                                    <span id="kilometrage">{vehicle['km'] !== null ? vehicle['km'] : 'n/a'} KM</span>
                                 </div>
                                 <div className="info-container">
                                     <div className="info-title">
                                         <span className="title-text">Year: </span>
                                     </div> 
-                                    <span id="year">{vehicle['year']}</span>
+                                    <span id="year">{vehicle['year'] !== null ? vehicle['year'] : 'n/a'}</span>
                                 </div>
                                 <div className="info-container">
                                     <div className="info-title">
                                         <span className="title-text">Country: </span>
                                     </div>
-                                    <span id="country">{vehicle['country']}</span>
+                                    <span id="country">{vehicle['country'] !== null ? vehicle['country'] : 'n/a'}</span>
                                 </div>
                                 <div className="info-container">
                                     <div className="info-title">
                                         <span className="title-text">Fuel Type: </span>
                                     </div>
-                                    <span id="fuelType">{vehicle['fuelType']}</span>
+                                    <span id="fuelType">{vehicle['fuelType'] !== null ? vehicle['fuelType'] : 'n/a'}</span>
                                 </div>
                             </div>
                             <div className="view-details-container" onClick={() => handleVehicleSelected(vehicle)}>

@@ -310,6 +310,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private void mapAdvertRequestToCarAdvert(CarAdvert carAdvert, AdvertRequest advertRequest) {
         carAdvert.setPrice(advertRequest.getPrice());
         carAdvert.setYear(advertRequest.getYear());
+        carAdvert.setKm(advertRequest.getKm());
         carAdvert.setFuelType(FuelType.valueOf(advertRequest.getFuelType()));
         carAdvert.setCountry(advertRequest.getCountry());
         carAdvert.setDescription(advertRequest.getDescription());

@@ -41,7 +41,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
 
         resetPasswordRepository.save(newResetPasswordToken);
 
-        String resetPasswordLink = "http://localhost:8080/reset-password/reset?token="
+        String resetPasswordLink = "http://localhost:3000/reset-password/reset?token="
                 + newResetPasswordToken.getToken()
                 + "&username=" + username;
 
